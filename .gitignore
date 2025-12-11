@@ -1,0 +1,50 @@
+# Maven
+Backend/target/
+Backend/pom.xml.tag
+Backend/pom.xml.releaseBackup
+Backend/pom.xml.versionsBackup
+Backend/pom.xml.next
+Backend/release.properties
+Backend/dependency-reduced-pom.xml
+Backend/buildNumber.properties
+Backend/.mvn/timing.properties
+Backend/.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# Build
+*.class
+*.jar
+*.war
+*.ear
+
+# H2 Database files
+*.db
+*.trace.db
+
+# Node modules (if using npm for frontend tools)
+node_modules/
+package-lock.json

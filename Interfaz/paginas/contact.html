@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Contáctanos y reserva tu mesa en Café Aroma"
+    />
+    <title>Contacto - Café Aroma</title>
+    <link rel="stylesheet" href="../CSS/styles.css" />
+    <link rel="stylesheet" href="../CSS/components.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+      <div class="container nav-container">
+        <div class="nav-logo">
+          <i class="fas fa-coffee"></i>
+          <span>Café Aroma</span>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="../index.html" class="nav-link">Inicio</a></li>
+          <li><a href="menu.html" class="nav-link">Menú</a></li>
+          <li><a href="about.html" class="nav-link">Nosotros</a></li>
+          <li><a href="contact.html" class="nav-link active">Contacto</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <h1>Contáctanos</h1>
+        <p>Reserva tu mesa o envíanos un mensaje</p>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <div class="container">
+        <div class="contact-grid">
+          <!-- Contact Form -->
+          <div class="contact-form-wrapper">
+            <h2>Reserva tu Mesa</h2>
+            <p class="form-intro">
+              Completa el formulario y nos pondremos en contacto contigo
+            </p>
+
+            <form id="reservationForm" class="reservation-form">
+              <div class="form-group">
+                <label class="form-label" for="name">Nombre Completo *</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-input"
+                  required
+                  placeholder="Tu nombre"
+                />
+                <span class="form-error"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="email">Email *</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-input"
+                  required
+                  placeholder="tu@email.com"
+                />
+                <span class="form-error"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="phone">Teléfono *</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  class="form-input"
+                  required
+                  placeholder="+1 (555) 123-4567"
+                />
+                <span class="form-error"></span>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="date">Fecha *</label>
+                  <input type="date" id="date" class="form-input" required />
+                  <span class="form-error"></span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="time">Hora *</label>
+                  <input type="time" id="time" class="form-input" required />
+                  <span class="form-error"></span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="persons"
+                  >Número de Personas *</label
+                >
+                <select id="persons" class="form-select" required>
+                  <option value="">Selecciona...</option>
+                  <option value="1">1 persona</option>
+                  <option value="2">2 personas</option>
+                  <option value="3">3 personas</option>
+                  <option value="4">4 personas</option>
+                  <option value="5">5 personas</option>
+                  <option value="6+">6+ personas</option>
+                </select>
+                <span class="form-error"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="message"
+                  >Mensaje (Opcional)</label
+                >
+                <textarea
+                  id="message"
+                  class="form-textarea"
+                  placeholder="¿Alguna petición especial?"
+                ></textarea>
+                <span class="form-error"></span>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block">
+                <i class="fas fa-paper-plane"></i> Enviar Reserva
+              </button>
+            </form>
+          </div>
+
+          <!-- Contact Info -->
+          <div class="contact-info">
+            <h2>Información de Contacto</h2>
+
+            <div class="info-card">
+              <div class="info-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="info-content">
+                <h3>Dirección</h3>
+                <p>Calle Principal #123<br />Centro, Ciudad</p>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div class="info-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div class="info-content">
+                <h3>Teléfono</h3>
+                <p>+1 (555) 123-4567</p>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div class="info-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="info-content">
+                <h3>Email</h3>
+                <p>info@cafearoma.com</p>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div class="info-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="info-content">
+                <h3>Horarios</h3>
+                <p>
+                  Lunes - Viernes: 7:00 AM - 9:00 PM<br />
+                  Sábado: 8:00 AM - 10:00 PM<br />
+                  Domingo: 8:00 AM - 8:00 PM
+                </p>
+              </div>
+            </div>
+
+            <div class="social-section">
+              <h3>Síguenos</h3>
+              <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h3>Café Aroma</h3>
+            <p>El mejor café artesanal de la ciudad</p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Enlaces Rápidos</h4>
+            <ul>
+              <li><a href="../index.html">Inicio</a></li>
+              <li><a href="menu.html">Menú</a></li>
+              <li><a href="about.html">Nosotros</a></li>
+              <li><a href="contact.html">Contacto</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Horarios</h4>
+            <ul>
+              <li>Lunes - Viernes: 7:00 AM - 9:00 PM</li>
+              <li>Sábado: 8:00 AM - 10:00 PM</li>
+              <li>Domingo: 8:00 AM - 8:00 PM</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Ubicación</h4>
+            <p>
+              <i class="fas fa-map-marker-alt"></i> Calle Principal #123, Centro
+            </p>
+            <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+            <p><i class="fas fa-envelope"></i> info@cafearoma.com</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2024 Café Aroma. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../javascript/script.js"></script>
+    <script>
+      // Form submission handler
+      document
+        .getElementById("reservationForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          // Use the validateForm function from script.js
+          if (!validateForm("reservationForm")) {
+            return;
+          }
+
+          // Collect form data
+          const formData = {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            date: document.getElementById("date").value,
+            time: document.getElementById("time").value,
+            persons: document.getElementById("persons").value,
+            message: document.getElementById("message").value,
+          };
+
+          try {
+            // Try to submit to API
+            await submitReservation(formData);
+
+            // Success message
+            alert(
+              "¡Gracias! Tu reserva ha sido enviada. Te contactaremos pronto."
+            );
+            this.reset();
+          } catch (error) {
+            // Fallback if API is not available
+            console.log("Reservation data:", formData);
+            alert(
+              "¡Gracias por tu reserva! Te contactaremos pronto para confirmar."
+            );
+            this.reset();
+          }
+        });
+    </script>
+    <style>
+      .page-header {
+        margin-top: 70px;
+        padding: var(--spacing-xl) 0;
+        background: linear-gradient(
+          135deg,
+          var(--color-primary),
+          var(--color-secondary)
+        );
+        color: var(--color-white);
+        text-align: center;
+      }
+
+      .page-header h1 {
+        font-family: var(--font-primary);
+        font-size: 3rem;
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .page-header p {
+        font-size: 1.2rem;
+        opacity: 0.95;
+      }
+
+      .contact-section {
+        padding: var(--spacing-xl) 0;
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: var(--spacing-xl);
+      }
+
+      .contact-form-wrapper h2,
+      .contact-info h2 {
+        font-family: var(--font-primary);
+        font-size: 2rem;
+        color: var(--color-primary-dark);
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .form-intro {
+        color: var(--color-text-light);
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-md);
+      }
+
+      .info-card {
+        display: flex;
+        gap: var(--spacing-md);
+        padding: var(--spacing-md);
+        background: var(--color-white);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm);
+        margin-bottom: var(--spacing-md);
+      }
+
+      .info-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(
+          135deg,
+          var(--color-primary),
+          var(--color-secondary)
+        );
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-white);
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+
+      .info-content h3 {
+        font-family: var(--font-primary);
+        color: var(--color-primary-dark);
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .info-content p {
+        color: var(--color-text-light);
+        line-height: 1.6;
+      }
+
+      .social-section {
+        margin-top: var(--spacing-lg);
+        padding: var(--spacing-md);
+        background: var(--color-bg-secondary);
+        border-radius: var(--radius-md);
+        text-align: center;
+      }
+
+      .social-section h3 {
+        font-family: var(--font-primary);
+        color: var(--color-primary-dark);
+        margin-bottom: var(--spacing-md);
+      }
+
+      @media (max-width: 768px) {
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </body>
+</html>
