@@ -1,26 +1,31 @@
 /* Variables de Color */
 :root {
   /* Colores principales */
-  --color-primary: #4a90e2;
-  --color-primary-light: #6ba3e8;
-  --color-primary-dark: #357abd;
-  --color-secondary: #50c878;
-  --color-accent: #ffb347;
+  --color-primary: #007aff;
+  /* iOS blue */
+  --color-primary-light: #5ac8fa;
+  --color-primary-dark: #0040dd;
+  --color-secondary: #8e8e93;
+  /* iOS gray */
+  --color-accent: #5856d6;
+  /* iOS purple */
 
   /* Colores neutrales */
-  --color-bg: #f8fafb;
-  --color-bg-secondary: #e8f4f8;
-  --color-text: #2c3e50;
-  --color-text-light: #5d6d7e;
+  --color-bg: #f2f2f7;
+  /* iOS light gray */
+  --color-bg-secondary: #e5e5ea;
+  --color-text: #1c1c1e;
+  /* iOS dark gray */
+  --color-text-light: #8e8e93;
   --color-white: #ffffff;
-  --color-black: #1a252f;
+  --color-black: #000000;
 
   /* Efectos */
-  --glass-bg: rgba(255, 255, 255, 0.15);
-  --glass-border: rgba(255, 255, 255, 0.25);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
 
   /* Espaciado */
   --spacing-xs: 0.5rem;
@@ -302,6 +307,7 @@ button {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -313,6 +319,7 @@ button {
     opacity: 0;
     transform: translateX(-30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -324,6 +331,7 @@ button {
     opacity: 0;
     transform: translateX(30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
