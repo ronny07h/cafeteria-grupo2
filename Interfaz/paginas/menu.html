@@ -1,181 +1,191 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Menú completo de Café Aroma - Cafés premium, postres caseros y snacks deliciosos"
-    />
-    <title>Menú - Café Aroma</title>
-    <link rel="stylesheet" href="../CSS/styles.css" />
-    <link rel="stylesheet" href="../CSS/components.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-  </head>
-  <body>
-    <!-- Navbar -->
-    <nav class="navbar" id="navbar">
-      <div class="container nav-container">
-        <div class="nav-logo">
-          <i class="fas fa-coffee"></i>
-          <span>Café Aroma</span>
-        </div>
-        <ul class="nav-menu" id="navMenu">
-          <li><a href="../index.html" class="nav-link">Inicio</a></li>
-          <li><a href="menu.html" class="nav-link active">Menú</a></li>
-          <li><a href="about.html" class="nav-link">Nosotros</a></li>
-          <li><a href="contact.html" class="nav-link">Contacto</a></li>
-        </ul>
-        <button class="nav-toggle" id="navToggle">
-          <i class="fas fa-bars"></i>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Menú completo de Café Aroma - Cafés premium, postres caseros y snacks deliciosos" />
+  <title>Menú - Café Aroma</title>
+  <link rel="stylesheet" href="../CSS/styles.css" />
+  <link rel="stylesheet" href="../CSS/components.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <div class="nav-logo">
+        <i class="fas fa-coffee"></i>
+        <span>Café Aroma</span>
+      </div>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="../index.html" class="nav-link">Inicio</a></li>
+        <li><a href="menu.html" class="nav-link active">Menú</a></li>
+        <li><a href="about.html" class="nav-link">Nosotros</a></li>
+        <li><a href="contact.html" class="nav-link">Contacto</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Nuestro Menú</h1>
+      <p>Descubre todos nuestros deliciosos productos</p>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section class="products-section">
+    <div class="container">
+      <!-- Category Filters -->
+      <div class="category-filters">
+        <button class="filter-btn active" data-category="all">
+          <i class="fas fa-th"></i> Todos
+        </button>
+        <button class="filter-btn" data-category="1">
+          <i class="fas fa-mug-hot"></i> Cafés
+        </button>
+        <button class="filter-btn" data-category="2">
+          <i class="fas fa-cake-candles"></i> Postres
+        </button>
+        <button class="filter-btn" data-category="3">
+          <i class="fas fa-cookie-bite"></i> Snacks
         </button>
       </div>
-    </nav>
 
-    <!-- Page Header -->
-    <section class="page-header">
-      <div class="container">
-        <h1>Nuestro Menú</h1>
-        <p>Descubre todos nuestros deliciosos productos</p>
-      </div>
-    </section>
-
-    <!-- Menu Section -->
-    <section class="products-section">
-      <div class="container">
-        <!-- Category Filters -->
-        <div class="category-filters">
-          <button class="filter-btn active" data-category="all">
-            <i class="fas fa-th"></i> Todos
-          </button>
-          <button class="filter-btn" data-category="1">
-            <i class="fas fa-mug-hot"></i> Cafés
-          </button>
-          <button class="filter-btn" data-category="2">
-            <i class="fas fa-cake-candles"></i> Postres
-          </button>
-          <button class="filter-btn" data-category="3">
-            <i class="fas fa-cookie-bite"></i> Snacks
-          </button>
-        </div>
-
-        <!-- Products Grid -->
-        <div class="products-grid" id="productsGrid">
-          <div class="loading">
-            <i class="fas fa-spinner fa-spin"></i> Cargando productos...
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-grid">
-          <div class="footer-col">
-            <h3>Café Aroma</h3>
-            <p>El mejor café artesanal de la ciudad</p>
-            <div class="social-links">
-              <a href="#"><i class="fab fa-facebook"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-            </div>
-          </div>
-          <div class="footer-col">
-            <h4>Enlaces Rápidos</h4>
-            <ul>
-              <li><a href="../index.html">Inicio</a></li>
-              <li><a href="menu.html">Menú</a></li>
-              <li><a href="about.html">Nosotros</a></li>
-              <li><a href="contact.html">Contacto</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Horarios</h4>
-            <ul>
-              <li>Lunes - Viernes: 7:00 AM - 9:00 PM</li>
-              <li>Sábado: 8:00 AM - 10:00 PM</li>
-              <li>Domingo: 8:00 AM - 8:00 PM</li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Ubicación</h4>
-            <p>
-              <i class="fas fa-map-marker-alt"></i> Calle Principal #123, Centro
-            </p>
-            <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
-            <p><i class="fas fa-envelope"></i> info@cafearoma.com</p>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2024 Café Aroma. Todos los derechos reservados.</p>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Product Modal -->
-    <div class="modal" id="productModal">
-      <div class="modal-content">
-        <button class="modal-close" id="modalClose">
-          <i class="fas fa-times"></i>
-        </button>
-        <div class="modal-body">
-          <div class="modal-image">
-            <div class="image-placeholder" id="modalImage">
-              <i class="fas fa-image fa-3x"></i>
-            </div>
-          </div>
-          <div class="modal-info">
-            <h2 id="modalTitle">Producto</h2>
-            <p class="modal-category" id="modalCategory">Categoría</p>
-            <p class="modal-price" id="modalPrice">$0.00</p>
-            <p class="modal-description" id="modalDescription">
-              Descripción del producto
-            </p>
-            <button
-              class="btn btn-primary btn-block"
-              onclick="alert('¡Gracias por tu interés! Función de pedido en desarrollo.')"
-            >
-              <i class="fas fa-shopping-cart"></i> Ordenar Ahora
-            </button>
-          </div>
+      <!-- Products Grid -->
+      <div class="products-grid" id="productsGrid">
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin"></i> Cargando productos...
         </div>
       </div>
     </div>
+  </section>
 
-    <script src="../javascript/script.js"></script>
-    <style>
-      .page-header {
-        margin-top: 70px;
-        padding: var(--spacing-xl) 0;
-        background: linear-gradient(
-          135deg,
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>Café Aroma</h3>
+          <p>El mejor café artesanal de la ciudad</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Enlaces Rápidos</h4>
+          <ul>
+            <li><a href="../index.html">Inicio</a></li>
+            <li><a href="menu.html">Menú</a></li>
+            <li><a href="about.html">Nosotros</a></li>
+            <li><a href="contact.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Horarios</h4>
+          <ul>
+            <li>Lunes - Viernes: 7:00 AM - 9:00 PM</li>
+            <li>Sábado: 8:00 AM - 10:00 PM</li>
+            <li>Domingo: 8:00 AM - 8:00 PM</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Ubicación</h4>
+          <p>
+            <i class="fas fa-map-marker-alt"></i> Calle Principal #123, Centro
+          </p>
+          <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+          <p><i class="fas fa-envelope"></i> info@cafearoma.com</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Café Aroma. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Product Modal -->
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="modal-body">
+        <div class="modal-image">
+          <div class="image-placeholder" id="modalImage">
+            <i class="fas fa-image fa-3x"></i>
+          </div>
+        </div>
+        <div class="modal-info">
+          <h2 id="modalTitle">Producto</h2>
+          <p class="modal-category" id="modalCategory">Categoría</p>
+          <p class="modal-price" id="modalPrice">$0.00</p>
+          <p class="modal-description" id="modalDescription">
+            Descripción del producto
+          </p>
+          <button class="btn btn-primary btn-block"
+            onclick="alert('¡Gracias por tu interés! Función de pedido en desarrollo.')">
+            <i class="fas fa-shopping-cart"></i> Ordenar Ahora
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../javascript/script.js"></script>
+  <style>
+    .page-header {
+      margin-top: 70px;
+      padding: var(--spacing-xl) 0;
+      background: linear-gradient(135deg,
           var(--color-primary),
-          var(--color-secondary)
-        );
-        color: var(--color-white);
-        text-align: center;
-      }
+          var(--color-secondary));
+      color: var(--color-white);
+      text-align: center;
+    }
 
-      .page-header h1 {
-        font-family: var(--font-primary);
-        font-size: 3rem;
-        margin-bottom: var(--spacing-sm);
-      }
+    .page-header h1 {
+      font-family: var(--font-primary);
+      font-size: 3rem;
+      margin-bottom: var(--spacing-sm);
+    }
 
-      .page-header p {
-        font-size: 1.2rem;
-        opacity: 0.95;
-      }
-    </style>
-  </body>
+    .page-header p {
+      font-size: 1.2rem;
+      opacity: 0.95;
+    }
+
+    .menu-item {
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .menu-item h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+    }
+
+    .menu-item img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--border-radius);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</body>
+
 </html>
