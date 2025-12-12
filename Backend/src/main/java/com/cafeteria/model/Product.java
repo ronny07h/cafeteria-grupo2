@@ -20,12 +20,13 @@ public class Product {
     @Column(nullable = false)
     private String name;
     
-    @Column(length = 500)
+    @Column(columnDefinition = "TEXT")
     private String description;
     
     @Column(nullable = false)
     private Double price;
     
+    @Column(columnDefinition = "TEXT")
     private String imageUrl;
     
     @ManyToOne(fetch = FetchType.EAGER)

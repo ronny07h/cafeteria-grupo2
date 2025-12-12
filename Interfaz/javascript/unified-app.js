@@ -14,7 +14,7 @@ const api = async (ep, method = 'GET', body = null) => {
 const load = async () => {
     const [p, c, r, cfg] = await Promise.all([api('/products'), api('/categories'), api('/reservations'), api('/config')]);
     state.products = p || getFallbackProducts();
-    // Default categories if API fails
+
     state.categories = c && c.length ? c : [{id:1, name:'Cafés'}, {id:2, name:'Postres'}, {id:3, name:'Snacks'}];
     state.reservations = r || [];
     if(cfg) state.config = cfg;
@@ -27,9 +27,12 @@ const tpl = {
     card: (p, adm) => `
         <div class="col-sm-6 col-lg-4 col-xl-3">
             <div class="card h-100 shadow-sm border-0 product-card-hover">
-                <div class="card-img-top bg-secondary-subtle text-center py-5">
-                    <i class="fas fa-coffee fa-3x text-secondary"></i>
-                </div>
+                ${p.imageUrl ? 
+                    `<img src="${p.imageUrl}" class="card-img-top" alt="${p.name}" style="height: 200px; object-fit: cover;">` : 
+                    `<div class="card-img-top bg-secondary-subtle text-center py-5">
+                        <i class="fas fa-coffee fa-3x text-secondary"></i>
+                    </div>`
+                }
                 ${adm ? `<div class="position-absolute top-0 end-0 p-2">
                     <button class="btn btn-sm btn-warning me-1" onclick="edit('product',${p.id})"><i class="fas fa-edit"></i></button>
                     <button class="btn btn-sm btn-danger" onclick="del('products',${p.id})"><i class="fas fa-trash"></i></button>
@@ -267,7 +270,13 @@ function bindEvents() {
         if(!f.checkValidity()) { e.stopPropagation(); f.classList.add('was-validated'); return; }
         
         const data = {}; 
-        Array.from(f.elements).forEach(i => { if(i.id && i.type!='submit') data[i.id.replace(/product|category|client|config/i,'').toLowerCase()] = i.value; }); // added config to regex
+        Array.from(f.elements).forEach(i => { 
+            if(i.id && i.type!='submit') {
+                let key = i.id.replace(/product|category|client|config/i,'').toLowerCase();
+                if(key === 'imageurl') key = 'imageUrl'; // Fix CamelCase for backend
+                data[key] = i.value;
+            }
+        });
         
         
         if(f.id.includes('Reservation')) {
@@ -345,43 +354,30 @@ window.toggleTTS = () => {
         showToast('Modo Lectura Desactivado', 'info');
     }
 };
-
+//accecisibilidad voz 
 document.addEventListener('click', (e) => {
     if (!state.ttsEnabled) return;
     
-    // Ignore clicks on the toggle button itself to avoid double speech/loops
     if (e.target.closest('#btn-tts')) return;
 
     let text = '';
-    // Try to get meaningful text
     const target = e.target;
     
     if (target.tagName === 'IMG' && target.alt) {
         text = "Imagen de " + target.alt;
     } else if (target.innerText && target.innerText.trim().length > 0) {
-        // Limit text length to avoid reading huge blocks accidentally
         text = target.innerText.trim().substring(0, 200); 
     }
 
     if (text) {
-        speechSynthesis.cancel(); // Stop current speech
+        speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'es-ES';
         speechSynthesis.speak(utterance);
-        
-        // Visual feedback
         const original = target.style.outline;
         target.style.outline = '2px solid #ffc107';
         setTimeout(() => target.style.outline = original, 1000);
     }
 });
-
-function getFallbackProducts() {
-    return [
-        { id: 1, name: 'Espresso', description: 'Café solo intenso', price: 2.50, category: {id:1, name:'Cafés'} },
-        { id: 2, name: 'Cappuccino', description: 'Espresso con espuma', price: 3.50, category: {id:1, name:'Cafés'} },
-        { id: 3, name: 'Tarta de Queso', description: 'Con frutos rojos', price: 4.50, category: {id:2, name:'Postres'} }
-    ];
-}
 
 document.addEventListener('DOMContentLoaded', window.init);
