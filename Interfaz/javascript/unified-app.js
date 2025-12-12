@@ -1,5 +1,5 @@
 const API_URL = 'http://localhost:9090/api';
-const state = { products: [], categories: [], reservations: [], mode: 'client' }; // Removed slideIdx/interval
+const state = { products: [], categories: [], reservations: [], config: {name: 'Café Aroma'}, mode: 'client' }; // Removed slideIdx/interval
 const el = (id) => document.getElementById(id);
 
 // --- API ---
@@ -12,11 +12,12 @@ const api = async (ep, method = 'GET', body = null) => {
 };
 
 const load = async () => {
-    const [p, c, r] = await Promise.all([api('/products'), api('/categories'), api('/reservations')]);
+    const [p, c, r, cfg] = await Promise.all([api('/products'), api('/categories'), api('/reservations'), api('/config')]);
     state.products = p || getFallbackProducts();
     // Default categories if API fails
     state.categories = c && c.length ? c : [{id:1, name:'Cafés'}, {id:2, name:'Postres'}, {id:3, name:'Snacks'}];
     state.reservations = r || [];
+    if(cfg) state.config = cfg;
     render();
 };
 
@@ -88,6 +89,11 @@ function render() {
 
     const sel = el('productCategory');
     if(sel) sel.innerHTML = '<option value="">Seleccionar...</option>' + state.categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+
+    // Update Company Name
+    if(state.config && state.config.name) {
+        document.querySelectorAll('.company-name-text').forEach(e => e.textContent = state.config.name);
+    }
 }
 
 // --- Global Actions ---
@@ -178,6 +184,10 @@ window.del = async (ep, id) => {
 
 window.abrirModalAgregarProducto = () => { el('productForm').reset(); el('productId').value=''; el('productModalTitle').textContent='Agregar Producto'; showModal('productModal'); };
 window.abrirModalAgregarCategoria = () => { el('categoryForm').reset(); el('categoryId').value=''; el('categoryModalTitle').textContent='Agregar Categoría'; showModal('categoryModal'); };
+window.abrirModalConfig = () => { 
+    if(state.config) el('configCompanyName').value = state.config.name;
+    showModal('configModal'); 
+};
 
 // --- Helpers ---
 function switchMode(m) {
@@ -257,13 +267,25 @@ function bindEvents() {
         if(!f.checkValidity()) { e.stopPropagation(); f.classList.add('was-validated'); return; }
         
         const data = {}; 
-        Array.from(f.elements).forEach(i => { if(i.id && i.type!='submit') data[i.id.replace(/product|category|client/i,'').toLowerCase()] = i.value; });
+        Array.from(f.elements).forEach(i => { if(i.id && i.type!='submit') data[i.id.replace(/product|category|client|config/i,'').toLowerCase()] = i.value; }); // added config to regex
         
-        if(f.id.includes('Reservation')) { 
+        
+        if(f.id.includes('Reservation')) {
             await api('/reservations', 'POST', data); 
             showToast('Reserva enviada con éxito', 'success'); 
             f.reset();
             f.classList.remove('was-validated');
+        } else if (f.id === 'configForm') {
+            const name = el('configCompanyName').value;
+            const res = await api('/config', 'PUT', {name});
+            if(res) {
+                state.config = res;
+                showToast('Configuración actualizada', 'success');
+                render();
+                window.hideModal('configModal');
+            } else {
+                showToast('Error al actualizar', 'error');
+            }
         } else { 
             if(data.price) data.price = parseFloat(data.price); 
             if(data.category) data.category = {id: parseInt(data.category)};
@@ -304,6 +326,55 @@ function updateThemeIcon(theme) {
     const icon = el('theme-icon');
     if(icon) icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
 }
+
+// --- TTS ---
+state.ttsEnabled = false;
+
+window.toggleTTS = () => {
+    state.ttsEnabled = !state.ttsEnabled;
+    const btn = el('btn-tts');
+    if (state.ttsEnabled) {
+        btn.classList.remove('btn-secondary');
+        btn.classList.add('btn-warning');
+        showToast('Modo Lectura Activado. Toca cualquier texto para escuchar.', 'info');
+        speechSynthesis.speak(new SpeechSynthesisUtterance('Modo lectura activado'));
+    } else {
+        btn.classList.remove('btn-warning');
+        btn.classList.add('btn-secondary');
+        speechSynthesis.cancel();
+        showToast('Modo Lectura Desactivado', 'info');
+    }
+};
+
+document.addEventListener('click', (e) => {
+    if (!state.ttsEnabled) return;
+    
+    // Ignore clicks on the toggle button itself to avoid double speech/loops
+    if (e.target.closest('#btn-tts')) return;
+
+    let text = '';
+    // Try to get meaningful text
+    const target = e.target;
+    
+    if (target.tagName === 'IMG' && target.alt) {
+        text = "Imagen de " + target.alt;
+    } else if (target.innerText && target.innerText.trim().length > 0) {
+        // Limit text length to avoid reading huge blocks accidentally
+        text = target.innerText.trim().substring(0, 200); 
+    }
+
+    if (text) {
+        speechSynthesis.cancel(); // Stop current speech
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'es-ES';
+        speechSynthesis.speak(utterance);
+        
+        // Visual feedback
+        const original = target.style.outline;
+        target.style.outline = '2px solid #ffc107';
+        setTimeout(() => target.style.outline = original, 1000);
+    }
+});
 
 function getFallbackProducts() {
     return [

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Café Aroma - Bootstrap Refactor</title>
+    <title>Cafetería - Bootstrap Refactor</title>
     <!-- Bootstrap 5 CSS -->
     <!-- CSS de Bootstrap 5 -->
     <link
@@ -108,7 +108,8 @@
       >
         <div class="container">
           <a class="navbar-brand fw-bold text-primary" href="#">
-            <i class="fas fa-coffee me-2"></i>Café Aroma
+            <i class="fas fa-coffee me-2"></i
+            ><span class="company-name-text">Café Aroma</span>
           </a>
           <button
             class="navbar-toggler"
@@ -187,7 +188,10 @@
               >
                 <div class="hero-overlay"></div>
                 <div class="hero-content container">
-                  <h1 class="display-3 fw-bold">Bienvenido a Café Aroma</h1>
+                  <h1 class="display-3 fw-bold">
+                    Bienvenido a
+                    <span class="company-name-text">Café Aroma</span>
+                  </h1>
                   <p class="lead">El mejor café artesanal de Azuay</p>
                   <button
                     class="btn btn-primary btn-lg mt-3"
@@ -309,7 +313,8 @@
               </h2>
               <p class="lead">Desde 2015, sirviendo pasión en cada taza.</p>
               <p>
-                Fundado por Andy, Carlos y Ronny, Café Aroma es más que una
+                Fundado por Andy, Carlos y Ronny,
+                <span class="company-name-text">Café Aroma</span> es más que una
                 cafetería; es un punto de encuentro para los amantes del buen
                 café.
               </p>
@@ -414,7 +419,8 @@
       <footer class="bg-body-tertiary py-4 mt-auto">
         <div class="container text-center">
           <p class="mb-0 text-body-secondary">
-            &copy; 2025 Café Aroma. Todos los derechos reservados.
+            &copy; 2025 <span class="company-name-text">Café Aroma</span>. Todos
+            los derechos reservados.
           </p>
         </div>
       </footer>
@@ -459,6 +465,11 @@
                   href="#admin-reservations"
                   onclick="mostrarSeccionAdmin('admin-reservations', event)"
                   >Reservas</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" onclick="abrirModalConfig(event)"
+                  >Configuración</a
                 >
               </li>
             </ul>
@@ -650,6 +661,47 @@
       </div>
     </div>
 
+    <!-- Modal de Configuración -->
+    <div class="modal fade" id="configModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Configuración de la Empresa</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="configForm">
+              <div class="mb-3">
+                <label class="form-label">Nombre de la Empresa</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="configCompanyName"
+                  required
+                />
+              </div>
+              <div class="text-end">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  Guardar Cambios
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Alternancia de Modo (Flotante) movido al final -->
     <div
       class="floating-mode-toggle btn-group shadow"
@@ -675,6 +727,14 @@
         title="Cambiar Tema"
       >
         <i class="fas fa-moon" id="theme-icon"></i>
+      </button>
+      <button
+        class="btn btn-secondary"
+        onclick="toggleTTS()"
+        title="Modo Lectura"
+        id="btn-tts"
+      >
+        <i class="fas fa-ear-listen"></i>
       </button>
     </div>
 
