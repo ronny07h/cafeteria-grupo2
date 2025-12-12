@@ -42,6 +42,13 @@ public class Product {
             this.categoryId = category.getId();
         }
     }
+
+    public Long getCategoryId() {
+        if (category != null) {
+            return category.getId();
+        }
+        return categoryId;
+    }
     
     public Product(String name, String description, Double price, String imageUrl, Category category) {
         this.name = name;

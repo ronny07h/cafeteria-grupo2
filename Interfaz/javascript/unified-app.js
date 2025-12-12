@@ -137,7 +137,44 @@ window.edit = (type, id) => {
     showModal(`${type}Modal`);
 };
 
-window.del = async (ep, id) => { if(confirm('¿Confirmar eliminación?')) { await api(`/${ep}/${id}`, 'DELETE'); await load(); } };
+// Toast Helper
+function showToast(message, type = 'success') {
+    const toastEl = el('liveToast');
+    const toastMsg = el('toastMessage');
+    const toastIcon = el('toastIcon');
+    const toastTitle = el('toastTitle');
+    
+    if(!toastEl || !toastMsg) return;
+    
+    toastMsg.textContent = message;
+    
+    // Customize based on type
+    if(type === 'success') {
+        toastIcon.className = 'fas fa-check-circle me-2 text-success';
+        toastTitle.textContent = 'Éxito';
+    } else if (type === 'error') {
+        toastIcon.className = 'fas fa-exclamation-circle me-2 text-danger';
+        toastTitle.textContent = 'Error';
+    } else {
+        toastIcon.className = 'fas fa-info-circle me-2 text-primary';
+        toastTitle.textContent = 'Información';
+    }
+    
+    const toast = new bootstrap.Toast(toastEl);
+    toast.show();
+}
+
+window.del = async (ep, id) => { 
+    if(confirm('¿Confirmar eliminación?')) { 
+        const success = await api(`/${ep}/${id}`, 'DELETE');
+        if (success) {
+            showToast('Elemento eliminado correctamente', 'success');
+            await load(); 
+        } else {
+            showToast('Error al eliminar elemento', 'error');
+        }
+    } 
+};
 
 window.abrirModalAgregarProducto = () => { el('productForm').reset(); el('productId').value=''; el('productModalTitle').textContent='Agregar Producto'; showModal('productModal'); };
 window.abrirModalAgregarCategoria = () => { el('categoryForm').reset(); el('categoryId').value=''; el('categoryModalTitle').textContent='Agregar Categoría'; showModal('categoryModal'); };
@@ -190,20 +227,28 @@ function getModal(id) {
 window.showModal = (id) => getModal(id).show();
 window.hideModal = (id) => getModal(id).hide();
 
-
 function bindEvents() {
     // Filters
     document.querySelectorAll('.filter-btn').forEach(b => b.addEventListener('click', e => {
-        document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active', 'btn-primary'));
-        document.querySelectorAll('.filter-btn').forEach(x => x.classList.add('btn-outline-primary'));
+        const btn = e.currentTarget;
         
-        e.target.classList.remove('btn-outline-primary');
-        e.target.classList.add('active', 'btn-primary');
+        document.querySelectorAll('.filter-btn').forEach(x => {
+            x.classList.remove('active', 'btn-primary');
+            x.classList.add('btn-outline-primary');
+        });
         
-        const cat = e.target.dataset.category, map = {'cafes':'Cafés','postres':'Postres','snacks':'Snacks'};
+        btn.classList.remove('btn-outline-primary');
+        btn.classList.add('active', 'btn-primary');
+        
+        const cat = btn.dataset.category;
+        const map = {'cafes':'Cafés','postres':'Postres','snacks':'Snacks'};
         const filtered = cat === 'all' ? state.products : state.products.filter(p => p.category?.id == cat || p.category?.name === map[cat]);
-        const listEl = el('menuProductsGrid');
-        if(listEl) listEl.innerHTML = filtered.length ? filtered.map(p => tpl.card(p, false)).join('') : '<div class="col-12 text-center p-5">No hay resultados</div>';
+        
+        // Update both grids if they exist
+        ['menuProductsGrid', 'adminProductsGrid'].forEach(gridId => {
+            const listEl = el(gridId);
+            if(listEl) listEl.innerHTML = filtered.length ? filtered.map(p => tpl.card(p, gridId.includes('admin'))).join('') : '<div class="col-12 text-center p-5">No hay resultados</div>';
+        });
     }));
     
     // Forms
@@ -216,7 +261,7 @@ function bindEvents() {
         
         if(f.id.includes('Reservation')) { 
             await api('/reservations', 'POST', data); 
-            alert('Reserva Enviada'); 
+            showToast('Reserva enviada con éxito', 'success'); 
             f.reset();
             f.classList.remove('was-validated');
         } else { 
@@ -229,9 +274,11 @@ function bindEvents() {
             const url = id ? `${endpoint}/${id}` : endpoint;
             
             if(await api(url, method, data)) { 
-                // alert('Guardado exitosamente'); // Bootstrap doesn't use alerts but let's keep it simple
+                showToast(id ? 'Elemento actualizado correctamente' : 'Elemento creado correctamente', 'success');
                 window.hideModal(f.id.replace('Form','Modal')); 
                 await load(); 
+            } else {
+                showToast('Error al guardar elemento', 'error');
             }
         }
     }));

@@ -229,7 +229,11 @@ function setupCategoryFilters() {
             if (category === 'all') {
                 displayProducts(products);
             } else {
-                const filtered = products.filter(p => p.categoryId == category);
+                const filtered = products.filter(p => {
+                    const catId = p.categoryId || (p.category ? p.category.id : null);
+                    // Use loose equality (==) to handle string/number comparison
+                    return catId == category;
+                });
                 displayProducts(filtered);
             }
         });

@@ -31,7 +31,6 @@ h6,
   position: relative;
 }
 
-/* Floating Toggle */
 .floating-mode-toggle {
   position: fixed;
   bottom: 2rem;
@@ -39,7 +38,6 @@ h6,
   z-index: 9999;
 }
 
-/* Cards Hover */
 .product-card-hover {
   transition: transform 0.2s ease-in-out;
 }

@@ -271,28 +271,24 @@
             <button
               class="btn btn-outline-primary active filter-btn"
               data-category="all"
-              onclick="filtrarProductosMenu('all')"
             >
               Todos
             </button>
             <button
               class="btn btn-outline-primary filter-btn"
               data-category="cafes"
-              onclick="filtrarProductosMenu('cafes')"
             >
               <i class="fas fa-mug-hot"></i> Cafés
             </button>
             <button
               class="btn btn-outline-primary filter-btn"
               data-category="postres"
-              onclick="filtrarProductosMenu('postres')"
             >
               <i class="fas fa-cake-candles"></i> Postres
             </button>
             <button
               class="btn btn-outline-primary filter-btn"
               data-category="snacks"
-              onclick="filtrarProductosMenu('snacks')"
             >
               <i class="fas fa-cookie-bite"></i> Snacks
             </button>
@@ -488,28 +484,24 @@
             <button
               class="btn btn-primary active filter-btn"
               data-category="all"
-              onclick="filtrarProductosMenu('all')"
             >
               Todos
             </button>
             <button
               class="btn btn-outline-primary filter-btn"
               data-category="cafes"
-              onclick="filtrarProductosMenu('cafes')"
             >
               <i class="fas fa-mug-hot"></i> Cafés
             </button>
             <button
               class="btn btn-outline-primary filter-btn"
               data-category="postres"
-              onclick="filtrarProductosMenu('postres')"
             >
               <i class="fas fa-cake-candles"></i> Postres
             </button>
             <button
               class="btn btn-outline-primary filter-btn"
               data-category="snacks"
-              onclick="filtrarProductosMenu('snacks')"
             >
               <i class="fas fa-cookie-bite"></i> Snacks
             </button>
@@ -684,6 +676,31 @@
       >
         <i class="fas fa-moon" id="theme-icon"></i>
       </button>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div
+        id="liveToast"
+        class="toast"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="toast-header">
+          <i class="fas fa-info-circle me-2 text-primary" id="toastIcon"></i>
+          <strong class="me-auto" id="toastTitle">Notificación</strong>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="toast-body" id="toastMessage">
+          Mensaje de la notificación
+        </div>
+      </div>
     </div>
 
     <!-- Bootstrap Bundle JS -->
