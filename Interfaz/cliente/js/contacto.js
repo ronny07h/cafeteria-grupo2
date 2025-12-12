@@ -1,31 +1,25 @@
-// ======================================
-// CONTACTO PAGE - Reservation Form
-// ======================================
+// Página de Contacto - Formulario de Reserva
 const API_BASE_URL = 'http://localhost:9090/api';
 
-// ======================================
-// INIT
-// ======================================
+// Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     setupForm();
     setMinDate();
 });
 
-// ======================================
-// FORM SETUP
-// ======================================
+// Configuración del Formulario
 function setupForm() {
     const form = document.getElementById('reservationForm');
     
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Validate form
+        // Validar Formulario
         if (!validateForm()) {
             return;
         }
         
-        // Get form data
+        // Obtener datos del formulario
         const formData = {
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
@@ -36,18 +30,16 @@ function setupForm() {
             message: document.getElementById('message').value || ''
         };
         
-        // Submit to API
+        // Enviar a la API
         await submitReservation(formData);
     });
 }
 
-// ======================================
-// VALIDATION
-// ======================================
+// Validación
 function validateForm() {
     let isValid = true;
     
-    // Name validation
+    // Validación de nombres
     const name = document.getElementById('name');
     if (name.value.trim().length < 3) {
         showError(name, 'El nombre debe tener al menos 3 caracteres');
@@ -56,7 +48,7 @@ function validateForm() {
         clearError(name);
     }
     
-    // Email validation
+    // Validación de email
     const email = document.getElementById('email');
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.value)) {
@@ -66,7 +58,7 @@ function validateForm() {
         clearError(email);
     }
     
-    // Phone validation
+    // Validación de teléfono
     const phone = document.getElementById('phone');
     if (phone.value.trim().length < 10) {
         showError(phone, 'Teléfono inválido');
@@ -75,7 +67,7 @@ function validateForm() {
         clearError(phone);
     }
     
-    // Date validation
+    // Validación de fecha
     const date = document.getElementById('date');
     if (!date.value) {
         showError(date, 'Selecciona una fecha');
@@ -84,7 +76,7 @@ function validateForm() {
         clearError(date);
     }
     
-    // Time validation
+    // Validación de hora
     const time = document.getElementById('time');
     if (!time.value) {
         showError(time, 'Selecciona una hora');
@@ -93,7 +85,7 @@ function validateForm() {
         clearError(time);
     }
     
-    // Persons validation
+    // Validación de personas
     const persons = document.getElementById('persons');
     if (!persons.value) {
         showError(persons, 'Selecciona número de personas');
@@ -121,9 +113,7 @@ function clearError(input) {
     errorSpan.textContent = '';
 }
 
-// ======================================
-// SUBMIT TO API
-// ======================================
+// Enviar a la API
 async function submitReservation(formData) {
     try {
         const response = await fetch(`${API_BASE_URL}/reservations`, {
@@ -142,53 +132,47 @@ async function submitReservation(formData) {
         
     } catch (error) {
         console.error('Error submitting reservation:', error);
-        // Show success anyway (form doesn't require backend)
+        // Mostrar éxito de todos modos (el formulario no requiere backend real para la demo)
         showSuccess();
     }
 }
 
-// ======================================
-// SUCCESS MESSAGE
-// ======================================
+// Mensaje de Éxito
 function showSuccess() {
     const form = document.getElementById('reservationForm');
     const successMessage = document.getElementById('successMessage');
     
-    // Hide form
+    // Ocultar formulario
     form.style.display = 'none';
     
-    // Show success message
+    // Mostrar mensaje de éxito
     successMessage.style.display = 'block';
     
-    // Scroll to success message
+    // Desplazarse al mensaje
     successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
     
-    // Reset form
+    // Reiniciar formulario
     form.reset();
     
-    // Show form again after 5 seconds
+    // Mostrar formulario nuevamente después de 5 segundos
     setTimeout(() => {
         form.style.display = 'block';
         successMessage.style.display = 'none';
     }, 5000);
 }
 
-// ======================================
-// SET MINIMUM DATE
-// ======================================
+// Establecer Fecha Mínima
 function setMinDate() {
     const dateInput = document.getElementById('date');
     const today = new Date().toISOString().split('T')[0];
     dateInput.setAttribute('min', today);
 }
 
-// ======================================
-// REAL-TIME VALIDATION
-// ======================================
+// Validación en Tiempo Real
 document.querySelectorAll('.form-input, .form-select').forEach(input => {
     input.addEventListener('blur', () => {
         if (input.value) {
-            // Validate on blur if has value
+            // Validar al perder el foco si tiene valor
             const formGroup = input.closest('.form-group');
             if (formGroup) {
                 clearError(input);

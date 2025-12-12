@@ -1,450 +1,413 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Café Aroma - Sistema Completo</title>
-    <link rel="stylesheet" href="CSS/styles.css" />
-    <link rel="stylesheet" href="CSS/components.css" />
-    <link rel="stylesheet" href="CSS/admin.css" />
-    <link rel="stylesheet" href="cliente/css/client.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>Café Aroma - Bootstrap Refactor</title>
+    <!-- Bootstrap 5 CSS -->
+    <!-- CSS de Bootstrap 5 -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <!-- FontAwesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+    <!-- Fuentes -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- CSS Personalizado  -->
     <style>
-      .mode-toggle {
-        position: fixed;
-        bottom: 30px;
-        left: 30px;
-        z-index: 10000;
-        background: white;
-        padding: 8px;
-        border-radius: 50px;
-        box-shadow: 0 6px 30px rgba(12, 11, 11, 0.12);
-        display: flex;
-        gap: 8px;
-        border: 2px solid #e8edf2;
+      :root {
+        --font-primary: "Outfit", sans-serif;
+        --font-secondary: "Inter", sans-serif;
       }
-
-      .mode-btn {
-        background: transparent;
-        color: #6b7280;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 25px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        font-size: 14px;
+      body {
+        font-family: var(--font-secondary);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      .card,
+      .navbar,
+      .modal-content,
+      .form-control {
+        transition: background-color 0.3s ease, color 0.3s ease,
+          border-color 0.3s ease;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      .navbar-brand {
+        font-family: var(--font-primary);
+      }
+      .hero-section {
+        height: 60vh;
+        min-height: 400px;
+        background-size: cover;
+        background-position: center;
+        background-color: #333;
+        position: relative;
         display: flex;
         align-items: center;
-        gap: 8px;
-      }
-
-      .mode-btn i {
-        font-size: 16px;
-      }
-
-      .mode-btn.active {
-        background: #6366f1;
+        justify-content: center;
         color: white;
-        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
       }
-
-      .mode-btn:hover:not(.active) {
-        background: #f3f4f6;
-        color: #374151;
+      .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
       }
-
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+      }
+      .card-img-top {
+        height: 200px;
+        object-fit: cover;
+        background-color: #eee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ccc;
+      }
+      .floating-mode-toggle {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1050;
+      }
+      /* Alternancia de Vistas */
       .view-section {
         display: none;
       }
-
       .view-section.active {
         display: block;
       }
     </style>
   </head>
-
   <body>
-    <!-- Toggle Cliente/Admin -->
-    <div class="mode-toggle">
-      <button class="mode-btn active" onclick="cambiarModo('client')">
-        <i class="fas fa-store"></i> Cliente
-      </button>
-      <button class="mode-btn" onclick="cambiarModo('admin')">
-        <i class="fas fa-user-shield"></i> Admin
-      </button>
-    </div>
-
     <!-- VISTA CLIENTE -->
-    <div id="clientView" class="view-section active">
-      <!-- Navbar Cliente -->
-      <nav class="navbar" id="clientNavbar">
-        <div class="container nav-container">
-          <div class="nav-logo">
-            <i class="fas fa-coffee"></i>
-            <span>Café Aroma</span>
-          </div>
-          <ul class="nav-menu" id="clientNavMenu">
-            <li>
-              <a
-                href="#client-home"
-                class="nav-link active"
-                onclick="mostrarSeccionCliente('client-home', event)"
-                >Inicio</a
-              >
-            </li>
-            <li>
-              <a
-                href="#client-menu"
-                class="nav-link"
-                onclick="mostrarSeccionCliente('client-menu', event)"
-                >Menú</a
-              >
-            </li>
-            <li>
-              <a
-                href="#client-about"
-                class="nav-link"
-                onclick="mostrarSeccionCliente('client-about', event)"
-                >Nosotros</a
-              >
-            </li>
-            <li>
-              <a
-                href="#client-contact"
-                class="nav-link"
-                onclick="mostrarSeccionCliente('client-contact', event)"
-                >Contacto</a
-              >
-            </li>
-          </ul>
-          <button class="nav-toggle" id="clientNavToggle">
-            <i class="fas fa-bars"></i>
+    <div
+      id="clientView"
+      class="view-section active min-vh-100 d-flex flex-column"
+    >
+      <!-- Barra de Navegación -->
+      <nav
+        class="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm"
+        id="clientNavbar"
+      >
+        <div class="container">
+          <a class="navbar-brand fw-bold text-primary" href="#">
+            <i class="fas fa-coffee me-2"></i>Café Aroma
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#clientNavContent"
+          >
+            <span class="navbar-toggler-icon"></span>
           </button>
+          <div class="collapse navbar-collapse" id="clientNavContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  href="#client-home"
+                  onclick="mostrarSeccionCliente('client-home', event)"
+                  >Inicio</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#client-menu"
+                  onclick="mostrarSeccionCliente('client-menu', event)"
+                  >Menú</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#client-about"
+                  onclick="mostrarSeccionCliente('client-about', event)"
+                  >Nosotros</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#client-contact"
+                  onclick="mostrarSeccionCliente('client-contact', event)"
+                  >Contacto</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
 
-      <!-- Página: Inicio -->
+      <!-- Sección de Inicio -->
       <section id="client-home" class="client-section active">
-        <!-- Hero Slider -->
-        <div class="hero-slider">
-          <div class="slider-container">
-            <div class="slide active">
-              <div class="slide-content">
-                <h1 class="slide-title">Bienvenido a Café Aroma</h1>
-                <p class="slide-text">El mejor café artesanal de Azuay</p>
-                <button
-                  class="btn btn-primary"
-                  onclick="mostrarSeccionCliente('client-menu')"
-                >
-                  <i class="fas fa-coffee"></i> Ver Menú
-                </button>
-              </div>
-              <div class="slide-overlay"></div>
-            </div>
-            <div class="slide">
-              <div class="slide-content">
-                <h1 class="slide-title">Café Premium</h1>
-                <p class="slide-text">
-                  Granos seleccionados de las mejores regiones
-                </p>
-              </div>
-              <div class="slide-overlay"></div>
-            </div>
-            <div class="slide">
-              <div class="slide-content">
-                <h1 class="slide-title">Ambiente Acogedor</h1>
-                <p class="slide-text">El lugar perfecto para disfrutar</p>
-              </div>
-              <div class="slide-overlay"></div>
-            </div>
+        <!-- Carrusel -->
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="0"
+              class="active"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#heroCarousel"
+              data-bs-slide-to="2"
+            ></button>
           </div>
-          <button class="slider-btn prev" onclick="cambiarDiapositiva(-1)">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <button class="slider-btn next" onclick="cambiarDiapositiva(1)">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-          <div class="slider-indicators" id="sliderIndicators"></div>
-        </div>
-
-        <!-- Welcome Section -->
-        <div class="welcome-section">
-          <div class="container">
-            <div class="section-header">
-              <h2 class="section-title">Sobre Café Aroma</h2>
-              <p class="section-subtitle">Pasión por el café desde 2015</p>
-            </div>
-            <div class="welcome-content">
-              <div class="welcome-text">
-                <p>
-                  En Café Aroma, cada taza cuenta una historia. Utilizamos
-                  granos premium seleccionados de las mejores regiones cafeteras
-                  del mundo.
-                </p>
-                <div class="welcome-stats">
-                  <div class="stat-item">
-                    <i class="fas fa-coffee"></i>
-                    <h3 id="homeProductCount">0</h3>
-                    <p>Productos</p>
-                  </div>
-                  <div class="stat-item">
-                    <i class="fas fa-users"></i>
-                    <h3>500+</h3>
-                    <p>Clientes</p>
-                  </div>
-                  <div class="stat-item">
-                    <i class="fas fa-award"></i>
-                    <h3>10+</h3>
-                    <p>Años</p>
-                  </div>
-                </div>
-              </div>
-              <div class="welcome-image">
-                <div class="image-placeholder">
-                  <i class="fas fa-coffee fa-5x"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Featured Products -->
-        <div class="featured-section">
-          <div class="container">
-            <div class="section-header">
-              <h2 class="section-title">Productos Destacados</h2>
-              <p class="section-subtitle">Los favoritos de nuestros clientes</p>
-            </div>
-            <div class="products-grid" id="homeFeaturedProducts">
-              <div class="loading">
-                <i class="fas fa-spinner fa-spin"></i> Cargando...
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Página: Menú -->
-      <section id="client-menu" class="client-section" style="display: none">
-        <div class="page-header">
-          <div class="container">
-            <h1>Nuestro Menú</h1>
-            <p>Descubre todos nuestros productos</p>
-          </div>
-        </div>
-
-        <div class="menu-section">
-          <div class="container">
-            <div class="category-filters">
-              <button
-                class="filter-btn active"
-                data-category="all"
-                onclick="filtrarProductosMenu('all')"
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div
+                class="hero-section"
+                style="background-image: url('assets/hero1.jpg')"
               >
-                <i class="fas fa-th"></i> Todos
-              </button>
-              <button
-                class="filter-btn"
-                data-category="cafes"
-                onclick="filtrarProductosMenu('cafes')"
-              >
-                <i class="fas fa-mug-hot"></i> Cafés
-              </button>
-              <button
-                class="filter-btn"
-                data-category="postres"
-                onclick="filtrarProductosMenu('postres')"
-              >
-                <i class="fas fa-cake-candles"></i> Postres
-              </button>
-              <button
-                class="filter-btn"
-                data-category="snacks"
-                onclick="filtrarProductosMenu('snacks')"
-              >
-                <i class="fas fa-cookie-bite"></i> Snacks
-              </button>
-            </div>
-
-            <div class="products-grid" id="menuProductsGrid">
-              <div class="loading">
-                <i class="fas fa-spinner fa-spin"></i> Cargando menú...
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Página: Nosotros -->
-      <section id="client-about" class="client-section" style="display: none">
-        <div class="page-header">
-          <div class="container">
-            <h1>Nuestra Historia</h1>
-            <p>Pasión por el café desde 2015</p>
-          </div>
-        </div>
-
-        <div class="about-section">
-          <div class="container">
-            <div class="about-grid">
-              <div class="about-content">
-                <h2>Café Aroma</h2>
-                <p>
-                  Fundado en 2015, Café Aroma nació del sueño de tres amigos
-                  Andy, Carlos y Ronny con el objetivo de crear un espacio donde
-                  el café artesanal se encuentre con la hospitalidad genuina.
-                </p>
-              </div>
-              <div class="about-image">
-                <div class="image-placeholder">
-                  <i class="fas fa-coffee fa-5x"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="gallery-section">
-          <div class="container">
-            <div class="section-header">
-              <h2 class="section-title">Galería de Productos</h2>
-            </div>
-            <div id="aboutGalleryContainer">
-              <div class="loading">
-                <i class="fas fa-spinner fa-spin"></i> Cargando galería...
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Página: Contacto -->
-      <section id="client-contact" class="client-section" style="display: none">
-        <div class="page-header">
-          <div class="container">
-            <h1>Contáctanos</h1>
-            <p>Reserva tu mesa</p>
-          </div>
-        </div>
-
-        <div class="contact-section">
-          <div class="container">
-            <div class="contact-grid">
-              <div class="contact-form-wrapper">
-                <h2>Formulario de Reserva</h2>
-                <form id="clientReservationForm">
-                  <div class="form-group">
-                    <label class="form-label"
-                      ><i class="fas fa-user"></i> Nombre *</label
-                    >
-                    <input
-                      type="text"
-                      class="form-input"
-                      id="clientName"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label"
-                      ><i class="fas fa-envelope"></i> Email *</label
-                    >
-                    <input
-                      type="email"
-                      class="form-input"
-                      id="clientEmail"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label"
-                      ><i class="fas fa-phone"></i> Teléfono *</label
-                    >
-                    <input
-                      type="tel"
-                      class="form-input"
-                      id="clientPhone"
-                      required
-                    />
-                  </div>
-                  <div class="form-row">
-                    <div class="form-group">
-                      <label class="form-label"
-                        ><i class="fas fa-calendar"></i> Fecha *</label
-                      >
-                      <input
-                        type="date"
-                        class="form-input"
-                        id="clientDate"
-                        required
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label class="form-label"
-                        ><i class="fas fa-clock"></i> Hora *</label
-                      >
-                      <input
-                        type="time"
-                        class="form-input"
-                        id="clientTime"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label"
-                      ><i class="fas fa-users"></i> Personas *</label
-                    >
-                    <select class="form-select" id="clientPersons" required>
-                      <option value="">Selecciona...</option>
-                      <option value="1">1 persona</option>
-                      <option value="2">2 personas</option>
-                      <option value="3">3 personas</option>
-                      <option value="4">4 personas</option>
-                      <option value="5+">5+ personas</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label"
-                      ><i class="fas fa-comment"></i> Mensaje</label
-                    >
-                    <textarea
-                      class="form-textarea"
-                      id="clientMessage"
-                    ></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-primary btn-block">
-                    <i class="fas fa-paper-plane"></i> Enviar Reserva
+                <div class="hero-overlay"></div>
+                <div class="hero-content container">
+                  <h1 class="display-3 fw-bold">Bienvenido a Café Aroma</h1>
+                  <p class="lead">El mejor café artesanal de Azuay</p>
+                  <button
+                    class="btn btn-primary btn-lg mt-3"
+                    onclick="mostrarSeccionCliente('client-menu')"
+                  >
+                    Ver Menú
                   </button>
-                </form>
+                </div>
               </div>
+            </div>
+            <div class="carousel-item">
+              <div
+                class="hero-section"
+                style="background-image: url('assets/hero2.jpg')"
+              >
+                <div class="hero-overlay"></div>
+                <div class="hero-content container">
+                  <h1 class="display-3 fw-bold">Café Premium</h1>
+                  <p class="lead">Granos seleccionados</p>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div
+                class="hero-section"
+                style="background-image: url('assets/hero3.jpg')"
+              >
+                <div class="hero-overlay"></div>
+                <div class="hero-content container">
+                  <h1 class="display-3 fw-bold">Ambiente Acogedor</h1>
+                  <p class="lead">Disfruta tu momento</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon"></span>
+          </button>
+        </div>
 
-              <div class="contact-info">
-                <h2>Información de Contacto</h2>
-                <div class="info-card">
-                  <div class="info-icon">
-                    <i class="fas fa-map-marker-alt"></i>
+        <!-- Productos Destacados -->
+        <div class="container my-5">
+          <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-primary">Productos Destacados</h2>
+            <p class="text-muted">Los favoritos de nuestros clientes</p>
+          </div>
+          <div id="homeFeaturedProducts" class="row g-4">
+            <!-- Inyectado por JS -->
+            <div class="col-12 text-center">
+              <div class="spinner-border text-primary"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección del Menú -->
+      <section id="client-menu" class="client-section" style="display: none">
+        <div class="bg-body-tertiary py-5 text-center mb-4">
+          <div class="container">
+            <h1 class="fw-bold">Nuestro Menú</h1>
+            <p class="lead text-muted">Descubre nuestros sabores</p>
+          </div>
+        </div>
+        <div class="container mb-5">
+          <div
+            class="d-flex justify-content-center gap-2 mb-4 flex-wrap category-filters"
+          >
+            <button
+              class="btn btn-outline-primary active filter-btn"
+              data-category="all"
+              onclick="filtrarProductosMenu('all')"
+            >
+              Todos
+            </button>
+            <button
+              class="btn btn-outline-primary filter-btn"
+              data-category="cafes"
+              onclick="filtrarProductosMenu('cafes')"
+            >
+              <i class="fas fa-mug-hot"></i> Cafés
+            </button>
+            <button
+              class="btn btn-outline-primary filter-btn"
+              data-category="postres"
+              onclick="filtrarProductosMenu('postres')"
+            >
+              <i class="fas fa-cake-candles"></i> Postres
+            </button>
+            <button
+              class="btn btn-outline-primary filter-btn"
+              data-category="snacks"
+              onclick="filtrarProductosMenu('snacks')"
+            >
+              <i class="fas fa-cookie-bite"></i> Snacks
+            </button>
+          </div>
+          <div id="menuProductsGrid" class="row g-4">
+            <!-- Inyectado por JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección Nosotros -->
+      <section id="client-about" class="client-section" style="display: none">
+        <div class="container my-5">
+          <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+              <h2 class="display-5 fw-bold text-primary mb-3">
+                Nuestra Historia
+              </h2>
+              <p class="lead">Desde 2015, sirviendo pasión en cada taza.</p>
+              <p>
+                Fundado por Andy, Carlos y Ronny, Café Aroma es más que una
+                cafetería; es un punto de encuentro para los amantes del buen
+                café.
+              </p>
+            </div>
+            <div class="col-lg-6">
+              <div
+                class="bg-secondary p-5 rounded text-center text-white"
+                style="height: 300px; display: grid; place-items: center"
+              >
+                <i class="fas fa-store fa-5x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección de Contacto -->
+      <section id="client-contact" class="client-section" style="display: none">
+        <div class="container my-5">
+          <div class="row g-5">
+            <div class="col-lg-6">
+              <h2 class="mb-4">Reserva tu Mesa</h2>
+              <form
+                id="clientReservationForm"
+                class="p-4 border rounded shadow-sm bg-body"
+              >
+                <div class="mb-3">
+                  <label class="form-label">Nombre</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="clientName"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="clientEmail"
+                    required
+                  />
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Fecha</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="clientDate"
+                      required
+                    />
                   </div>
-                  <div class="info-content">
-                    <h3>Dirección</h3>
-                    <p>Ej: Vargas Machuca</p>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Hora</label>
+                    <input
+                      type="time"
+                      class="form-control"
+                      id="clientTime"
+                      required
+                    />
                   </div>
                 </div>
-                <div class="info-card">
-                  <div class="info-icon"><i class="fas fa-phone"></i></div>
-                  <div class="info-content">
-                    <h3>Teléfono</h3>
-                    <p>Ej: +593 98 330 4543</p>
-                  </div>
+                <div class="mb-3">
+                  <label class="form-label">Personas</label>
+                  <select class="form-select" id="clientPersons" required>
+                    <option value="1">1 Persona</option>
+                    <option value="2">2 Personas</option>
+                    <option value="4">4 Personas</option>
+                    <option value="5+">5+ Personas</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                  Enviar Reserva
+                </button>
+              </form>
+            </div>
+            <div class="col-lg-6">
+              <h2 class="mb-4">Info de Contacto</h2>
+              <div class="card mb-3">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <i class="fas fa-map-marker-alt text-primary"></i> Dirección
+                  </h5>
+                  <p class="card-text">Vargas Machuca, Cuenca, Ecuador</p>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <i class="fas fa-phone text-primary"></i> Teléfono
+                  </h5>
+                  <p class="card-text">+593 98 330 4543</p>
                 </div>
               </div>
             </div>
@@ -452,251 +415,280 @@
         </div>
       </section>
 
-      <!-- Footer -->
-      <footer class="footer">
-        <div class="container">
-          <div class="footer-bottom">
-            <p>&copy; 2025 Café Aroma.</p>
-          </div>
+      <footer class="bg-body-tertiary py-4 mt-auto">
+        <div class="container text-center">
+          <p class="mb-0 text-body-secondary">
+            &copy; 2025 Café Aroma. Todos los derechos reservados.
+          </p>
         </div>
       </footer>
     </div>
 
     <!-- VISTA ADMIN -->
     <div id="adminView" class="view-section" style="display: none">
-      <!-- Navbar Admin -->
-      <nav class="navbar admin-navbar">
-        <div class="container nav-container">
-          <div class="nav-logo">
-            <i class="fas fa-cog"></i>
-            <span>Admin - Café Aroma</span>
+      <nav class="navbar navbar-dark bg-primary navbar-expand-lg sticky-top">
+        <div class="container">
+          <a class="navbar-brand" href="#"
+            ><i class="fas fa-cog me-2"></i>Admin Panel</a
+          >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#adminNav"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="adminNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  href="#admin-products"
+                  onclick="mostrarSeccionAdmin('admin-products', event)"
+                  >Productos</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#admin-categories"
+                  onclick="mostrarSeccionAdmin('admin-categories', event)"
+                  >Categorías</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#admin-reservations"
+                  onclick="mostrarSeccionAdmin('admin-reservations', event)"
+                  >Reservas</a
+                >
+              </li>
+            </ul>
           </div>
-          <ul class="nav-menu">
-            <li>
-              <a
-                href="#admin-products"
-                class="nav-link active"
-                onclick="mostrarSeccionAdmin('admin-products', event)"
-                >Productos</a
-              >
-            </li>
-            <li>
-              <a
-                href="#admin-categories"
-                class="nav-link"
-                onclick="mostrarSeccionAdmin('admin-categories', event)"
-                >Categorías</a
-              >
-            </li>
-            <li>
-              <a
-                href="#admin-reservations"
-                class="nav-link"
-                onclick="mostrarSeccionAdmin('admin-reservations', event)"
-                >Reservas</a
-              >
-            </li>
-          </ul>
         </div>
       </nav>
 
-      <!-- Admin Header -->
-      <div class="admin-header">
-        <div class="container">
-          <h1><i class="fas fa-dashboard"></i> Panel de Administración</h1>
-          <p>Gestiona productos, categorías y reservas</p>
-        </div>
-      </div>
-
-      <!-- Sección: Productos -->
-      <section id="admin-products" class="admin-section">
-        <div class="container">
-          <div class="section-header-admin">
-            <h2><i class="fas fa-coffee"></i> Gestión de Productos</h2>
+      <div class="container my-5">
+        <!-- Productos -->
+        <section id="admin-products" class="admin-section active">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Gestión de Productos</h2>
             <button
               class="btn btn-primary"
               onclick="abrirModalAgregarProducto()"
             >
-              <i class="fas fa-plus"></i> Agregar Producto
+              <i class="fas fa-plus"></i> Nuevo
             </button>
           </div>
-
-          <div class="category-filters">
+          <div
+            class="d-flex justify-content-center gap-2 mb-4 flex-wrap category-filters"
+          >
             <button
-              class="filter-btn active"
+              class="btn btn-primary active filter-btn"
               data-category="all"
-              onclick="filtrarProductosAdmin('all')"
+              onclick="filtrarProductosMenu('all')"
             >
-              <i class="fas fa-th"></i> Todos
+              Todos
             </button>
             <button
-              class="filter-btn"
-              data-category="1"
-              onclick="filtrarProductosAdmin('1')"
+              class="btn btn-outline-primary filter-btn"
+              data-category="cafes"
+              onclick="filtrarProductosMenu('cafes')"
             >
               <i class="fas fa-mug-hot"></i> Cafés
             </button>
             <button
-              class="filter-btn"
-              data-category="2"
-              onclick="filtrarProductosAdmin('2')"
+              class="btn btn-outline-primary filter-btn"
+              data-category="postres"
+              onclick="filtrarProductosMenu('postres')"
             >
               <i class="fas fa-cake-candles"></i> Postres
             </button>
             <button
-              class="filter-btn"
-              data-category="3"
-              onclick="filtrarProductosAdmin('3')"
+              class="btn btn-outline-primary filter-btn"
+              data-category="snacks"
+              onclick="filtrarProductosMenu('snacks')"
             >
               <i class="fas fa-cookie-bite"></i> Snacks
             </button>
           </div>
+          <div id="adminProductsGrid" class="row g-4"></div>
+        </section>
 
-          <div class="admin-products-grid" id="adminProductsGrid">
-            <div class="loading">
-              <i class="fas fa-spinner fa-spin"></i> Cargando productos...
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Sección: Categorías -->
-      <section
-        id="admin-categories"
-        class="admin-section"
-        style="display: none"
-      >
-        <div class="container">
-          <div class="section-header-admin">
-            <h2><i class="fas fa-tags"></i> Gestión de Categorías</h2>
+        <!-- Categorias -->
+        <section
+          id="admin-categories"
+          class="admin-section"
+          style="display: none"
+        >
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Gestión de Categorías</h2>
             <button
               class="btn btn-primary"
               onclick="abrirModalAgregarCategoria()"
             >
-              <i class="fas fa-plus"></i> Agregar Categoría
+              <i class="fas fa-plus"></i> Nueva
             </button>
           </div>
+          <div id="adminCategoriesList" class="row g-4"></div>
+        </section>
 
-          <div class="categories-list" id="adminCategoriesList">
-            <div class="loading">
-              <i class="fas fa-spinner fa-spin"></i> Cargando categorías...
-            </div>
+        <!-- Reservas -->
+        <section
+          id="admin-reservations"
+          class="admin-section"
+          style="display: none"
+        >
+          <h2 class="mb-4">Reservas</h2>
+          <div class="table-responsive">
+            <div id="adminReservationsTable"></div>
           </div>
-        </div>
-      </section>
-
-      <!-- Sección: Reservas -->
-      <section
-        id="admin-reservations"
-        class="admin-section"
-        style="display: none"
-      >
-        <div class="container">
-          <div class="section-header-admin">
-            <h2><i class="fas fa-calendar-check"></i> Gestión de Reservas</h2>
-          </div>
-
-          <div class="reservations-table" id="adminReservationsTable">
-            <div class="loading">
-              <i class="fas fa-spinner fa-spin"></i> Cargando reservas...
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
 
-    <!-- Modals -->
-    <div class="modal" id="productModal">
-      <div class="modal-content">
-        <button class="modal-close" onclick="cerrarModal('productModal')">
-          <i class="fas fa-times"></i>
-        </button>
-        <div class="modal-body">
-          <h2 id="productModalTitle">Producto</h2>
-          <form id="productForm">
-            <input type="hidden" id="productId" />
-            <div class="form-group">
-              <label class="form-label">Nombre *</label>
-              <input type="text" id="productName" class="form-input" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Descripción *</label>
-              <textarea
-                id="productDescription"
-                class="form-textarea"
-                required
-              ></textarea>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Precio ($) *</label>
+    <!-- MODALES -->
+    <!-- Modal de Producto -->
+    <div class="modal fade" id="productModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="productModalTitle">Producto</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="productForm">
+              <input type="hidden" id="productId" />
+              <div class="mb-3">
+                <label class="form-label">Nombre</label>
                 <input
-                  type="number"
-                  step="0.01"
-                  id="productPrice"
-                  class="form-input"
+                  type="text"
+                  class="form-control"
+                  id="productName"
                   required
                 />
               </div>
-              <div class="form-group">
-                <label class="form-label">Categoría *</label>
-                <select id="productCategory" class="form-select" required>
-                  <option value="">Seleccionar...</option>
-                </select>
+              <div class="mb-3">
+                <label class="form-label">Descripción</label>
+                <textarea
+                  class="form-control"
+                  id="productDescription"
+                  required
+                ></textarea>
               </div>
-            </div>
-            <div class="form-actions">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                onclick="cerrarModal('productModal')"
-              >
-                Cancelar
-              </button>
-              <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Guardar
-              </button>
-            </div>
-          </form>
+              <div class="row">
+                <div class="col-6 mb-3">
+                  <label class="form-label">Precio ($)</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    class="form-control"
+                    id="productPrice"
+                    required
+                  />
+                </div>
+                <div class="col-6 mb-3">
+                  <label class="form-label">Categoría</label>
+                  <select
+                    class="form-select"
+                    id="productCategory"
+                    required
+                  ></select>
+                </div>
+              </div>
+              <div class="text-end">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="modal" id="categoryModal">
-      <div class="modal-content modal-small">
-        <button class="modal-close" onclick="cerrarModal('categoryModal')">
-          <i class="fas fa-times"></i>
-        </button>
-        <div class="modal-body">
-          <h2 id="categoryModalTitle">Categoría</h2>
-          <form id="categoryForm">
-            <input type="hidden" id="categoryId" />
-            <div class="form-group">
-              <label class="form-label">Nombre *</label>
-              <input
-                type="text"
-                id="categoryName"
-                class="form-input"
-                required
-              />
-            </div>
-            <div class="form-actions">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                onclick="cerrarModal('categoryModal')"
-              >
-                Cancelar
-              </button>
-              <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Guardar
-              </button>
-            </div>
-          </form>
+    <!-- Modal de Categoría -->
+    <div class="modal fade" id="categoryModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="categoryModalTitle">Categoría</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="categoryForm">
+              <input type="hidden" id="categoryId" />
+              <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="categoryName"
+                  required
+                />
+              </div>
+              <div class="text-end">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- Alternancia de Modo (Flotante) movido al final -->
+    <div
+      class="floating-mode-toggle btn-group shadow"
+      style="position: fixed; bottom: 20px; left: 20px; z-index: 9999"
+    >
+      <button
+        class="btn btn-primary"
+        onclick="cambiarModo('client')"
+        id="btn-mode-client"
+      >
+        <i class="fas fa-store"></i> Cliente
+      </button>
+      <button
+        class="btn btn-outline-secondary"
+        onclick="cambiarModo('admin')"
+        id="btn-mode-admin"
+      >
+        <i class="fas fa-user-shield"></i> Admin
+      </button>
+      <button
+        class="btn btn-secondary"
+        onclick="toggleTheme()"
+        title="Cambiar Tema"
+      >
+        <i class="fas fa-moon" id="theme-icon"></i>
+      </button>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JS Personalizado -->
     <script src="javascript/unified-app.js"></script>
   </body>
 </html>

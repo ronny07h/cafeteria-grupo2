@@ -1,43 +1,37 @@
-// ======================================
-// MENU PAGE - Products from API
-// ======================================
+// Página del Menú - Productos desde API
 const API_BASE_URL = 'http://localhost:9090/api';
 
 let allProducts = [];
 let allCategories = [];
 let currentFilter = 'all';
 
-// ======================================
-// INIT
-// ======================================
+// Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     loadMenuData();
     setupFilters();
 });
 
-// ======================================
-// LOAD DATA FROM API
-// ======================================
+// Cargar datos de la API
 async function loadMenuData() {
     try {
-        // Load products
+        // Cargar productos
         const productsRes = await fetch(`${API_BASE_URL}/products`);
         if (productsRes.ok) {
             allProducts = await productsRes.json();
             console.log('Menu products loaded:', allProducts);
         }
         
-        // Load categories
+        // Cargar categorías
         const categoriesRes = await fetch(`${API_BASE_URL}/categories`);
         if (categoriesRes.ok) {
             allCategories = await categoriesRes.json();
         }
         
-        // Update stats
+        // Actualizar estadísticas
         document.getElementById('statsTotal').textContent = allProducts.length;
         document.getElementById('statsCategories').textContent = allCategories.length;
         
-        // Display all products
+        // Mostrar todos los productos
         displayMenuProducts(allProducts);
         
     } catch (error) {
@@ -46,9 +40,7 @@ async function loadMenuData() {
     }
 }
 
-// ======================================
-// DISPLAY PRODUCTS
-// ======================================
+// Mostrar Productos
 function displayMenuProducts(productsToShow) {
     const container = document.getElementById('menuProducts');
     
@@ -85,19 +77,17 @@ function displayMenuProducts(productsToShow) {
     }).join('');
 }
 
-// ======================================
-// FILTERS
-// ======================================
+// Filtros
 function setupFilters() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     
     filterButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Update active state
+            // Actualizar estado activo
             filterButtons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             
-            // Filter products
+            // Filtrar productos
             const category = btn.dataset.category;
             filterProducts(category);
         });
@@ -110,7 +100,7 @@ function filterProducts(category) {
     if (category === 'all') {
         displayMenuProducts(allProducts);
     } else {
-        // Map category names
+        // Mapa de categorías
         const categoryMap = {
             'cafes': 'Cafés',
             'postres': 'Postres',
@@ -126,9 +116,7 @@ function filterProducts(category) {
     }
 }
 
-// ======================================
-// MODAL
-// ======================================
+// Modal
 function openProductModal(productId) {
     const product = allProducts.find(p => p.id === productId);
     if (!product) return;
@@ -149,9 +137,7 @@ function closeProductModal() {
     document.body.style.overflow = '';
 }
 
-// ======================================
-// FALLBACK DATA
-// ======================================
+// Datos de Respaldo
 function showFallbackMenu() {
     allProducts = [
         { id: 1, name: 'Espresso Clásico', description: 'Café espresso tradicional', price: 3.50, category: { name: 'Cafés' } },

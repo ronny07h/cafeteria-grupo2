@@ -1,40 +1,34 @@
-// ======================================
-// NOSOTROS PAGE - Gallery from API
-// ======================================
+// Página Nosotros - Galería desde API
 const API_BASE_URL = 'http://localhost:9090/api';
 
 let products = [];
 let categories = [];
 
-// ======================================
-// INIT
-// ======================================
+// Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     loadGalleryData();
 });
 
-// ======================================
-// LOAD DATA FROM API
-// ======================================
+// Cargar datos de la API
 async function loadGalleryData() {
     try {
-        // Load products
+        // Cargar productos
         const productsRes = await fetch(`${API_BASE_URL}/products`);
         if (productsRes.ok) {
             products = await productsRes.json();
         }
         
-        // Load categories
+        // Cargar categorías
         const categoriesRes = await fetch(`${API_BASE_URL}/categories`);
         if (categoriesRes.ok) {
             categories = await categoriesRes.json();
         }
         
-        // Update stats
+        // Actualizar estadísticas
         document.getElementById('totalProductsCount').textContent = products.length;
         document.getElementById('totalCategoriesCount').textContent = categories.length;
         
-        // Display gallery by category
+        // Mostrar galería por categoría
         displayGalleryByCategory();
         
     } catch (error) {
@@ -43,9 +37,7 @@ async function loadGalleryData() {
     }
 }
 
-// ======================================
-// DISPLAY GALLERY
-// ======================================
+// Mostrar Galería
 function displayGalleryByCategory() {
     const container = document.getElementById('galleryContainer');
     
@@ -59,7 +51,7 @@ function displayGalleryByCategory() {
         return;
     }
     
-    // Group products by category
+    // Agrupar productos por categoría
     let html = '';
     
     categories.forEach(category => {
@@ -94,9 +86,7 @@ function displayGalleryByCategory() {
     container.innerHTML = html;
 }
 
-// ======================================
-// FALLBACK DATA
-// ======================================
+// Datos de Respaldo
 function showFallbackGallery() {
     categories = [
         { id: 1, name: 'Cafés' },

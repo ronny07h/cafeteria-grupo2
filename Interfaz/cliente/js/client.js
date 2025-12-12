@@ -1,28 +1,20 @@
-// ======================================
-// CONFIGURATION
-// ======================================
+// Configuración
 const API_BASE_URL = 'http://localhost:9090/api';
 
-// ======================================
-// STATE
-// ======================================
+// Estado Global
 let products = [];
 let categories = [];
 let currentSlide = 0;
 let slideInterval;
 
-// ======================================
-// INITIALIZATION
-// ======================================
+// Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     initNav();
     initSlider();
     loadDataFromAPI();
 });
 
-// ======================================
-// NAVIGATION
-// ======================================
+// Navegación
 function initNav() {
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
@@ -33,7 +25,7 @@ function initNav() {
         });
     }
     
-    // Scroll effect
+    // Efecto de desplazamiento (Scroll)
     window.addEventListener('scroll', () => {
         const navbar = document.getElementById('navbar');
         if (window.scrollY > 50) {
@@ -44,16 +36,14 @@ function initNav() {
     });
 }
 
-// ======================================
-// SLIDER
-// ======================================
+// Lógica del Slider
 function initSlider() {
     const slides = document.querySelectorAll('.slide');
     const indicators = document.getElementById('sliderIndicators');
     
     if (!slides.length || !indicators) return;
     
-    // Create indicators
+    // Crear indicadores
     slides.forEach((_, index) => {
         const indicator = document.createElement('div');
         indicator.className = 'indicator' + (index === 0 ? ' active' : '');
@@ -61,7 +51,7 @@ function initSlider() {
         indicators.appendChild(indicator);
     });
     
-    // Auto-play
+    // Reproducción automática
     startSlider();
 }
 
@@ -85,7 +75,7 @@ function changeSlide(direction) {
     slides[currentSlide].classList.add('active');
     indicators[currentSlide].classList.add('active');
     
-    // Reset interval
+    // Reiniciar intervalo
     clearInterval(slideInterval);
     startSlider();
 }
@@ -106,9 +96,7 @@ function goToSlide(index) {
     startSlider();
 }
 
-// ======================================
-// API CALLS
-// ======================================
+// Llamadas a la API
 async function loadDataFromAPI() {
     await Promise.all([
         loadProducts(),
@@ -124,13 +112,13 @@ async function loadProducts() {
         products = await response.json();
         console.log('Products loaded:', products);
         
-        // Update total products count
+        // Actualizar contador total de productos
         const totalProductsEl = document.getElementById('totalProducts');
         if (totalProductsEl) {
             totalProductsEl.textContent = products.length;
         }
         
-        // Display featured products (first 6)
+        // Mostrar productos destacados (primeros 6)
         displayFeaturedProducts();
         
     } catch (error) {
@@ -155,9 +143,7 @@ async function loadCategories() {
     }
 }
 
-// ======================================
-// DISPLAY FUNCTIONS
-// ======================================
+// Funciones de Visualización
 function displayFeaturedProducts() {
     const container = document.getElementById('featuredProducts');
     if (!container) return;
@@ -218,9 +204,7 @@ function displayCategories() {
     `).join('');
 }
 
-// ======================================
-// PRODUCT MODAL
-// ======================================
+// Modal de Producto
 function openProductModal(productId) {
     const product = products.find(p => p.id === productId);
     if (!product) return;
@@ -245,7 +229,7 @@ function closeProductModal() {
     }
 }
 
-// Close modal on outside click
+// Cerrar modal al hacer clic fuera
 document.addEventListener('click', (e) => {
     const modal = document.getElementById('productModal');
     if (modal && e.target === modal) {
@@ -253,16 +237,14 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Close modal on Escape key
+// Cerrar modal con la tecla Escape
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closeProductModal();
     }
 });
 
-// ======================================
-// FALLBACK DATA (if API fails)
-// ======================================
+// Datos de Respaldo (si falla la API)
 function showFallbackProducts() {
     products = [
         { id: 1, name: 'Espresso', description: 'Café fuerte y aromático', price: 3.50, category: { name: 'Cafés' } },
@@ -291,9 +273,7 @@ function showFallbackCategories() {
     displayCategories();
 }
 
-// ======================================
-// SMOOTH SCROLL
-// ======================================
+// Desplazamiento Suave
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
