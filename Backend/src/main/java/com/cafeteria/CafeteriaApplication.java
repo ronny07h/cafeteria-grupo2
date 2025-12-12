@@ -8,8 +8,7 @@ public class CafeteriaApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CafeteriaApplication.class, args);
-        System.out.println("\n========================================");
         System.out.println(" Cafeteria Backend FUNCIONANDO");
-        System.out.println("========================================\n");
+
     }
 }
