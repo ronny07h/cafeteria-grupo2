@@ -1,0 +1,92 @@
+<nav
+  class="navbar navbar-dark bg-primary navbar-expand-lg sticky-top admin-navbar"
+  role="navigation"
+>
+  <div class="container">
+    <a class="navbar-brand" routerLink="/admin">
+      <i class="fas fa-cog me-2" aria-hidden="true"></i>
+      Panel de Administración
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#adminNav"
+      aria-controls="adminNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="adminNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/admin/dashboard"
+            routerLinkActive="active"
+          >
+            <i class="fas fa-tachometer-alt me-1"></i>
+            Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/admin/products"
+            routerLinkActive="active"
+          >
+            <i class="fas fa-box me-1"></i>
+            Productos
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/admin/categories"
+            routerLinkActive="active"
+          >
+            <i class="fas fa-tags me-1"></i>
+            Categorías
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/admin/reservations"
+            routerLinkActive="active"
+          >
+            <i class="fas fa-calendar-check me-1"></i>
+            Reservas
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/admin/news"
+            routerLinkActive="active"
+          >
+            <i class="fas fa-newspaper me-1"></i>
+            Noticias
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/admin/config"
+            routerLinkActive="active"
+          >
+            <i class="fas fa-cog me-1"></i>
+            Configuración
+          </a>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link btn btn-link text-warning" (click)="logout()">
+            <i class="fas fa-sign-out-alt me-1"></i>
+            Cerrar Sesión
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

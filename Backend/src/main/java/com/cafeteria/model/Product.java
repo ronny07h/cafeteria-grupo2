@@ -17,12 +17,17 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @jakarta.validation.constraints.NotBlank(message = "Name is required")
+    @jakarta.validation.constraints.Size(min = 3, message = "Name must be at least 3 characters")
     @Column(nullable = false)
     private String name;
     
+    @jakarta.validation.constraints.Size(min = 10, message = "Description must be at least 10 characters")
     @Column(columnDefinition = "TEXT")
     private String description;
     
+    @jakarta.validation.constraints.NotNull(message = "Price is required")
+    @jakarta.validation.constraints.Min(value = 0, message = "Price must be positive")
     @Column(nullable = false)
     private Double price;
     

@@ -24,6 +24,7 @@ public class Reservation {
     private Long id;
     
     @NotBlank(message = "Name is required")
+    @jakarta.validation.constraints.Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúñÑ\\s]+$", message = "Name must contain only letters and spaces")
     @Column(nullable = false)
     private String name;
     
@@ -33,6 +34,7 @@ public class Reservation {
     private String email;
     
     @NotBlank(message = "Phone is required")
+    @jakarta.validation.constraints.Pattern(regexp = "^\\d{10}$", message = "Phone must be exactly 10 digits")
     @Column(nullable = false)
     private String phone;
     

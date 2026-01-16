@@ -1,0 +1,196 @@
+<!-- Floating accessibility button -->
+<button
+  class="btn btn-primary rounded-circle position-fixed bottom-0 end-0 m-3 shadow-lg"
+  style="width: 60px; height: 60px; z-index: 9998"
+  (click)="togglePanel()"
+  aria-label="Abrir panel de accesibilidad"
+  title="Accesibilidad"
+>
+  <i class="fas fa-universal-access fs-3"></i>
+</button>
+
+<!-- Modal overlay -->
+@if (isOpen) {
+<div
+  class="modal-backdrop show"
+  style="z-index: 9998"
+  (click)="togglePanel()"
+></div>
+
+<!-- Accessibility panel modal -->
+<div
+  class="position-fixed top-50 start-50 translate-middle bg-dark text-white rounded shadow-lg accessibility-modal"
+  style="
+    z-index: 9999;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+  "
+>
+  <!-- Header -->
+  <div
+    class="d-flex justify-content-between align-items-center p-3 border-bottom border-secondary"
+  >
+    <h5 class="mb-0">
+      <i class="fas fa-universal-access me-2"></i>
+      Accesibilidad
+    </h5>
+    <button
+      class="btn btn-outline-light btn-sm"
+      (click)="togglePanel()"
+      aria-label="Cerrar panel"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <!-- Body -->
+  <div class="p-3">
+    <!-- Font size controls -->
+    <div class="row g-2 mb-3">
+      <div class="col-6">
+        <button
+          class="btn btn-outline-light w-100 d-flex flex-column align-items-center py-3"
+          (click)="decreaseFontSize()"
+          [disabled]="settings.fontSize <= 80"
+        >
+          <i class="fas fa-font fs-4 mb-2"></i>
+          <span class="fw-bold">A-</span>
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          class="btn btn-outline-light w-100 d-flex flex-column align-items-center py-3"
+          (click)="increaseFontSize()"
+          [disabled]="settings.fontSize >= 150"
+        >
+          <i class="fas fa-font fs-4 mb-2"></i>
+          <span class="fw-bold">A+</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Toggle controls -->
+    <div class="row g-2 mb-3">
+      <div class="col-6">
+        <button
+          class="btn w-100 d-flex flex-column align-items-center py-3"
+          [ngClass]="settings.contrast ? 'btn-primary' : 'btn-outline-light'"
+          (click)="toggleSetting('contrast')"
+        >
+          <i class="fas fa-adjust fs-4 mb-2"></i>
+          <span class="fw-bold small">CONTRASTE</span>
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          class="btn w-100 d-flex flex-column align-items-center py-3"
+          [ngClass]="
+            settings.highlightLinks ? 'btn-primary' : 'btn-outline-light'
+          "
+          (click)="toggleSetting('highlightLinks')"
+        >
+          <i class="fas fa-lightbulb fs-4 mb-2"></i>
+          <span class="fw-bold small">ILUMINAR ENLACES</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row g-2 mb-3">
+      <div class="col-6">
+        <button
+          class="btn w-100 d-flex flex-column align-items-center py-3"
+          [ngClass]="
+            settings.removeStyles ? 'btn-primary' : 'btn-outline-light'
+          "
+          (click)="toggleSetting('removeStyles')"
+        >
+          <i class="fas fa-align-justify fs-4 mb-2"></i>
+          <span class="fw-bold small">RESTABLECER ESTILOS</span>
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          class="btn w-100 d-flex flex-column align-items-center py-3"
+          [ngClass]="settings.grayscale ? 'btn-primary' : 'btn-outline-light'"
+          (click)="toggleSetting('grayscale')"
+        >
+          <i class="fas fa-image fs-4 mb-2"></i>
+          <span class="fw-bold small">ESCALA GRISES</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row g-2 mb-3">
+      <div class="col-6">
+        <button
+          class="btn w-100 d-flex flex-column align-items-center py-3"
+          [ngClass]="
+            settings.invertColors ? 'btn-primary' : 'btn-outline-light'
+          "
+          (click)="toggleSetting('invertColors')"
+        >
+          <i class="fas fa-tint fs-4 mb-2"></i>
+          <span class="fw-bold small">INVERTIR</span>
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          class="btn w-100 d-flex flex-column align-items-center py-3"
+          [ngClass]="
+            settings.noAnimations ? 'btn-primary' : 'btn-outline-light'
+          "
+          (click)="toggleSetting('noAnimations')"
+        >
+          <i class="fas fa-ban fs-4 mb-2"></i>
+          <span class="fw-bold small">SIN ANIMACIONES</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row g-2 mb-3">
+      <div class="col-6">
+        <button
+          class="btn w-100 d-flex flex-column align-items-center py-3"
+          [ngClass]="settings.largeCursor ? 'btn-primary' : 'btn-outline-light'"
+          (click)="toggleSetting('largeCursor')"
+        >
+          <i class="fas fa-arrows-alt fs-4 mb-2"></i>
+          <span class="fw-bold small">CURSOR AMPLIADO</span>
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          class="btn w-100 d-flex flex-column align-items-center py-3"
+          [ngClass]="settings.monochrome ? 'btn-primary' : 'btn-outline-light'"
+          (click)="toggleSetting('monochrome')"
+        >
+          <i class="fas fa-circle fs-4 mb-2"></i>
+          <span class="fw-bold small">MONOCROMÁTICO</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row g-2 mb-3">
+      <div class="col-6">
+        <button
+          class="btn w-100 d-flex flex-column align-items-center py-3"
+          [ngClass]="settings.sepia ? 'btn-primary' : 'btn-outline-light'"
+          (click)="toggleSetting('sepia')"
+        >
+          <i class="fas fa-circle fs-4 mb-2"></i>
+          <span class="fw-bold small">SEPIA</span>
+        </button>
+      </div>
+      <div class="col-6"></div>
+    </div>
+
+    <!-- Reset button -->
+    <button class="btn btn-danger w-100 py-2" (click)="resetSettings()">
+      <i class="fas fa-redo me-2"></i>
+      Restablecer Todo
+    </button>
+  </div>
+</div>
+}

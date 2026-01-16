@@ -1,0 +1,46 @@
+/* These styles are applied globally because of ViewEncapsulation.None */
+
+body.high-contrast {
+  filter: contrast(150%);
+}
+body.highlight-links a {
+  background: yellow !important;
+  color: black !important;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+body.grayscale {
+  filter: grayscale(100%);
+}
+body.invert-colors {
+  filter: invert(100%);
+}
+body.invert-colors img,
+body.invert-colors video {
+  filter: invert(100%);
+}
+body.no-animations * {
+  animation: none !important;
+  transition: none !important;
+}
+body.remove-styles {
+  background: white !important;
+  color: black !important;
+}
+body.remove-styles * {
+  background: white !important;
+  color: black !important;
+  font-family: Arial, sans-serif !important;
+}
+body.large-cursor,
+body.large-cursor * {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="black" stroke="white" stroke-width="1" d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg>')
+      12 12,
+    auto !important;
+}
+body.monochrome {
+  filter: grayscale(100%) contrast(120%);
+}
+body.sepia {
+  filter: sepia(100%);
+}

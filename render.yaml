@@ -1,0 +1,28 @@
+services:
+  # Backend Spring Boot
+  - type: web
+    name: cafeteria-backend
+    runtime: java
+    region: oregon
+    plan: free
+    branch: master
+    rootDir: ./Backend
+    buildCommand: cd .. && chmod +x build.sh && ./build.sh
+    startCommand: java -jar target/cafeteria-backend-1.0.0.jar --spring.profiles.active=prod
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cafeteria-db
+          property: connectionString
+      - key: JAVA_TOOL_OPTIONS
+        value: "-Xmx512m"
+    healthCheckPath: /
+
+databases:
+  - name: cafeteria-db
+    databaseName: cafeteria
+    user: cafeteria_user
+    plan: free
+    region: oregon

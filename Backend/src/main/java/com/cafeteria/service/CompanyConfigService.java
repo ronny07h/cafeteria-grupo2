@@ -22,9 +22,9 @@ public class CompanyConfigService {
         return configs.get(0);
     }
 
-    public CompanyConfig updateCompanyConfig(String name) {
+    public CompanyConfig updateCompanyConfig(CompanyConfig configDetails) {
         CompanyConfig config = getCompanyConfig();
-        config.setName(name);
+        config.setName(configDetails.getName());
         return repository.save(config);
     }
 }

@@ -1,0 +1,108 @@
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Gestión de Reservas</h2>
+    <div class="badge bg-primary fs-6">Total: {{ reservations.length }}</div>
+  </div>
+
+  @if (loading) {
+  <div class="spinner-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando reservas...</span>
+    </div>
+  </div>
+  } @if (error) {
+  <div class="alert alert-danger" role="alert">
+    {{ error }}
+    <button
+      class="btn btn-outline-danger btn-sm ms-3"
+      (click)="loadReservations()"
+    >
+      Reintentar
+    </button>
+  </div>
+  } @if (!loading && !error) { @if (reservations.length > 0) {
+  <div class="table-responsive">
+    <table class="table table-hover table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Personas</th>
+          <th>Mensaje</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (reservation of reservations; track reservation.id) {
+        <tr>
+          <td>{{ reservation.id }}</td>
+          <td>
+            <strong>{{ reservation.name }}</strong>
+          </td>
+          <td>
+            <a
+              [href]="'mailto:' + reservation.email"
+              class="text-decoration-none"
+            >
+              <i class="fas fa-envelope me-1"></i>
+              {{ reservation.email }}
+            </a>
+          </td>
+          <td>
+            <a [href]="'tel:' + reservation.phone" class="text-decoration-none">
+              <i class="fas fa-phone me-1"></i>
+              {{ reservation.phone }}
+            </a>
+          </td>
+          <td>
+            <i class="fas fa-calendar me-1"></i>
+            {{ reservation.date | date : "longDate" : "" : "es-EC" }}
+          </td>
+          <td>
+            <i class="fas fa-clock me-1"></i>
+            {{ reservation.time | slice : 0 : 5 }}
+          </td>
+          <td>
+            <span class="badge bg-info">
+              <i class="fas fa-users me-1"></i>
+              {{ reservation.persons }}
+            </span>
+          </td>
+          <td>
+            @if (reservation.message) {
+            <span class="text-muted" [title]="reservation.message">
+              {{
+                reservation.message.length > 30
+                  ? (reservation.message | slice : 0 : 30) + "..."
+                  : reservation.message
+              }}
+            </span>
+            } @else {
+            <span class="text-muted fst-italic">Sin mensaje</span>
+            }
+          </td>
+          <td>
+            <button
+              class="btn btn-sm btn-outline-danger"
+              (click)="handleDelete(reservation.id)"
+              [attr.aria-label]="'Eliminar reserva de ' + reservation.name"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @else {
+  <div class="alert alert-info text-center">
+    <i class="fas fa-info-circle me-2"></i>
+    No hay reservas registradas.
+  </div>
+  } }
+</div>

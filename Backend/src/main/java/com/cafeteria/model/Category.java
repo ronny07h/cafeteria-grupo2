@@ -18,6 +18,9 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @jakarta.validation.constraints.NotBlank(message = "Name is required")
+    @jakarta.validation.constraints.Size(min = 3, message = "Name must be at least 3 characters")
+    @jakarta.validation.constraints.Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúñÑ\\s]+$", message = "Name must contain only letters and spaces")
     @Column(nullable = false, unique = true)
     private String name;
     

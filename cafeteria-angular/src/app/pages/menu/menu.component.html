@@ -1,0 +1,69 @@
+<div class="min-vh-100">
+  <div class="bg-body-tertiary py-5 text-center mb-4">
+    <div class="container">
+      <h1 class="fw-bold">Nuestro Menú</h1>
+      <p class="lead text-muted">Descubre nuestros deliciosos sabores</p>
+    </div>
+  </div>
+
+  <div class="container mb-5">
+    <!-- Category Filters -->
+    <div
+      class="d-flex justify-content-center gap-2 mb-4 flex-wrap category-filters"
+    >
+      <button
+        class="btn"
+        [ngClass]="
+          selectedCategory === 'all' ? 'btn-primary' : 'btn-outline-primary'
+        "
+        (click)="handleCategoryChange('all')"
+      >
+        Todos
+      </button>
+      @for (category of categories; track category.id) {
+      <button
+        class="btn"
+        [ngClass]="
+          selectedCategory === category.id.toString()
+            ? 'btn-primary'
+            : 'btn-outline-primary'
+        "
+        (click)="handleCategoryChange(category.id.toString())"
+      >
+        {{ category.name }}
+      </button>
+      }
+    </div>
+
+    @if (loading) {
+    <div class="spinner-container">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando menú...</span>
+      </div>
+    </div>
+    } @if (error) {
+    <div class="alert alert-danger" role="alert">
+      {{ error }}
+      <button class="btn btn-outline-danger btn-sm ms-3" (click)="loadData()">
+        Reintentar
+      </button>
+    </div>
+    } @if (!loading && !error) {
+    <div class="row g-4">
+      @if (filteredProducts.length > 0) { @for (product of filteredProducts;
+      track product.id) {
+      <div class="col-md-6 col-lg-4">
+        <app-product-card [product]="product"></app-product-card>
+      </div>
+      } } @else {
+      <div class="col-12 text-center">
+        <div class="alert alert-info">
+          <i class="fas fa-info-circle me-2"></i>
+          No hay productos en esta categoría.
+        </div>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>

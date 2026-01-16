@@ -1,0 +1,61 @@
+<nav
+  class="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm"
+  role="navigation"
+>
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary" routerLink="/">
+      <i class="fas fa-coffee me-2" aria-hidden="true"></i>
+      <span>{{ companyName }}</span>
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Inicio</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/menu" routerLinkActive="active"
+            >Menú</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/news" routerLinkActive="active"
+            >Noticias</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about" routerLinkActive="active"
+            >Nosotros</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact" routerLinkActive="active"
+            >Contacto</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-primary fw-semibold" routerLink="/admin">
+            <i class="fas fa-user-shield me-1" aria-hidden="true"></i>
+            Admin
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

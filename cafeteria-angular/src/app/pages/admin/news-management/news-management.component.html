@@ -1,0 +1,144 @@
+<div class="container-fluid p-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Gestión de Noticias</h2>
+    <button class="btn btn-primary" (click)="handleOpenModal()">
+      <i class="fas fa-plus me-2"></i>Nueva Noticia
+    </button>
+  </div>
+
+  @if (loading) {
+  <div class="spinner-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando noticias...</span>
+    </div>
+  </div>
+  } @if (error) {
+  <div class="alert alert-danger" role="alert">
+    {{ error }}
+    <button class="btn btn-outline-danger btn-sm ms-3" (click)="loadNews()">
+      Reintentar
+    </button>
+  </div>
+  } @if (!loading && !error) {
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Título</th>
+              <th>Fecha</th>
+              <th>Contenido (Resumen)</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (news of newsList; track news.id) {
+            <tr>
+              <td class="fw-bold">{{ news.title }}</td>
+              <td>{{ news.publicationDate | date : "shortDate" }}</td>
+              <td>
+                {{
+                  news.content.length > 50
+                    ? (news.content | slice : 0 : 50) + "..."
+                    : news.content
+                }}
+              </td>
+              <td>
+                <button
+                  class="btn btn-sm btn-outline-primary me-2"
+                  (click)="handleOpenModal(news)"
+                >
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="handleDelete(news.id)"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  }
+
+  <!-- Modal -->
+  @if (showModal) {
+  <div
+    class="modal d-block"
+    style="background-color: rgba(0, 0, 0, 0.5)"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            {{ editingNews ? "Editar Noticia" : "Nueva Noticia" }}
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="handleCloseModal()"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="handleSubmit()" id="newsForm">
+            <div class="mb-3">
+              <label class="form-label">Título</label>
+              <input
+                type="text"
+                class="form-control"
+                name="title"
+                [(ngModel)]="formData.title"
+                required
+                minlength="5"
+                title="El título debe tener al menos 5 caracteres."
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Contenido</label>
+              <textarea
+                class="form-control"
+                rows="5"
+                name="content"
+                [(ngModel)]="formData.content"
+                required
+                minlength="20"
+                title="El contenido debe tener al menos 20 caracteres."
+              ></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">URL de Imagen</label>
+              <input
+                type="text"
+                class="form-control"
+                name="imageUrl"
+                [(ngModel)]="formData.imageUrl"
+                placeholder="https://ejemplo.com/imagen.jpg"
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="handleCloseModal()"
+          >
+            Cancelar
+          </button>
+          <button type="submit" form="newsForm" class="btn btn-primary">
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

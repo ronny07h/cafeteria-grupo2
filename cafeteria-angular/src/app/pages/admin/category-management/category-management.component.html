@@ -1,0 +1,122 @@
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Gestión de Categorías</h2>
+    <button class="btn btn-primary" (click)="handleOpenModal()">
+      <i class="fas fa-plus me-2"></i>
+      Nueva Categoría
+    </button>
+  </div>
+
+  @if (loading) {
+  <div class="spinner-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando categorías...</span>
+    </div>
+  </div>
+  } @if (error) {
+  <div class="alert alert-danger" role="alert">
+    {{ error }}
+    <button
+      class="btn btn-outline-danger btn-sm ms-3"
+      (click)="loadCategories()"
+    >
+      Reintentar
+    </button>
+  </div>
+  } @if (!loading && !error) {
+  <div class="row g-4">
+    @if (categories.length > 0) { @for (category of categories; track
+    category.id) {
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">
+            <i class="fas fa-tag text-primary me-2"></i>
+            {{ category.name }}
+          </h5>
+          <div class="mt-3 d-flex gap-2">
+            <button
+              class="btn btn-sm btn-outline-primary flex-fill"
+              (click)="handleOpenModal(category)"
+            >
+              <i class="fas fa-edit"></i> Editar
+            </button>
+            <button
+              class="btn btn-sm btn-outline-danger flex-fill"
+              (click)="handleDelete(category.id)"
+            >
+              <i class="fas fa-trash"></i> Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    } } @else {
+    <div class="col-12 text-center">
+      <div class="alert alert-info">
+        <i class="fas fa-info-circle me-2"></i>
+        No hay categorías registradas.
+      </div>
+    </div>
+    }
+  </div>
+  }
+
+  <!-- Category Modal -->
+  @if (showModal) {
+  <div
+    class="modal show d-block"
+    tabindex="-1"
+    style="background-color: rgba(0, 0, 0, 0.5)"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            {{ editingCategory ? "Editar Categoría" : "Nueva Categoría" }}
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="handleCloseModal()"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="handleSubmit()" id="categoryForm">
+            <div class="mb-3">
+              <label for="name" class="form-label">
+                Nombre <span class="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                name="name"
+                [(ngModel)]="formData.name"
+                (ngModelChange)="onNameChange($event)"
+                required
+                minlength="3"
+                pattern="^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$"
+                title="El nombre debe tener al menos 3 caracteres y solo contener letras."
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="handleCloseModal()"
+          >
+            Cancelar
+          </button>
+          <button type="submit" form="categoryForm" class="btn btn-primary">
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

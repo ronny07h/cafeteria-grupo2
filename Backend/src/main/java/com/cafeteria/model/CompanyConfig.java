@@ -10,6 +10,8 @@ public class CompanyConfig {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @jakarta.validation.constraints.NotBlank(message = "Company name is required")
+    @jakarta.validation.constraints.Size(min = 3, message = "Company name must be at least 3 characters")
     private String name;
 
     public CompanyConfig() {

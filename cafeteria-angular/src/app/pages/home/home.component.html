@@ -1,0 +1,116 @@
+<div class="min-vh-100 d-flex flex-column">
+  <!-- Hero Carousel -->
+  <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button
+        type="button"
+        data-bs-target="#heroCarousel"
+        data-bs-slide-to="0"
+        class="active"
+        aria-current="true"
+        aria-label="Slide 1"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#heroCarousel"
+        data-bs-slide-to="1"
+        aria-label="Slide 2"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#heroCarousel"
+        data-bs-slide-to="2"
+        aria-label="Slide 3"
+      ></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="hero-section" style="background-color: #0d6efd">
+          <div class="hero-overlay"></div>
+          <div class="hero-content container">
+            <h1 class="display-3 fw-bold">Bienvenido a {{ companyName }}</h1>
+            <p class="lead">El mejor café artesanal de Azuay</p>
+            <a routerLink="/menu" class="btn btn-primary btn-lg mt-3"
+              >Ver Menú</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="hero-section" style="background-color: #0d6efd">
+          <div class="hero-overlay"></div>
+          <div class="hero-content container">
+            <h1 class="display-3 fw-bold">Café Premium</h1>
+            <p class="lead">Granos seleccionados de la mejor calidad</p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="hero-section" style="background-color: #0d6efd">
+          <div class="hero-overlay"></div>
+          <div class="hero-content container">
+            <h1 class="display-3 fw-bold">Ambiente Acogedor</h1>
+            <p class="lead">Disfruta tu momento perfecto</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#heroCarousel"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#heroCarousel"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+  </div>
+
+  <!-- Featured Products -->
+  <section class="container my-5">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-primary">Productos Destacados</h2>
+      <p class="text-muted">Los favoritos de nuestros clientes</p>
+    </div>
+
+    @if (loading) {
+    <div class="spinner-container">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+    } @if (error) {
+    <div class="alert alert-danger" role="alert">
+      {{ error }}
+      <button class="btn btn-outline-danger btn-sm ms-3" (click)="loadData()">
+        Reintentar
+      </button>
+    </div>
+    } @if (!loading && !error) {
+    <div class="row g-4">
+      @if (products.length > 0) { @for (product of products; track product.id) {
+      <div class="col-md-6 col-lg-4">
+        <app-product-card [product]="product"></app-product-card>
+      </div>
+      } } @else {
+      <div class="col-12 text-center">
+        <p class="text-muted">No hay productos disponibles en este momento.</p>
+      </div>
+      }
+    </div>
+    } @if (!loading && !error && products.length > 0) {
+    <div class="text-center mt-5">
+      <a routerLink="/menu" class="btn btn-primary btn-lg">Ver Todo el Menú</a>
+    </div>
+    }
+  </section>
+</div>

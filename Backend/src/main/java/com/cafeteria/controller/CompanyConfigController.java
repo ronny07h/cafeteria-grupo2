@@ -2,10 +2,13 @@ package com.cafeteria.controller;
 
 import com.cafeteria.model.CompanyConfig;
 import com.cafeteria.service.CompanyConfigService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+
+
 
 @RestController
 @RequestMapping("/api/config")
@@ -21,8 +24,7 @@ public class CompanyConfigController {
     }
 
     @PutMapping
-    public CompanyConfig updateConfig(@RequestBody Map<String, String> payload) {
-        String name = payload.get("name");
-        return service.updateCompanyConfig(name);
+    public ResponseEntity<CompanyConfig> updateCompanyConfig(@Valid @RequestBody CompanyConfig config) {
+        return ResponseEntity.ok(service.updateCompanyConfig(config));
     }
 }

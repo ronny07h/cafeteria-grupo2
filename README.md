@@ -274,6 +274,68 @@ En `application.properties`:
 spring.web.cors.allowed-origins=http://localhost:3000
 ```
 
+## 🚀 Despliegue en Render
+
+### Archivos de Configuración
+
+El proyecto incluye archivos para despliegue automático en Render:
+
+- **`render.yaml`** - Configuración de servicio y base de datos
+- **`build.sh`** - Script de compilación Maven
+- **`Backend/src/main/resources/application-prod.properties`** - Configuración de producción
+
+### Pasos para Desplegar
+
+1. **Sube tu código a GitHub**:
+
+```bash
+git add .
+git commit -m "Add Render deployment configuration"
+git push
+```
+
+2. **Crea una cuenta en Render**: [render.com](https://render.com)
+
+3. **Conecta tu repositorio**:
+   - Click en "New" → "Blueprint"
+   - Selecciona tu repositorio de GitHub
+   - Render detectará automáticamente el `render.yaml`
+
+4. **Deploy**:
+   - Click en "Apply"
+   - Render creará automáticamente:
+     - Web Service (Backend Spring Boot)
+     - PostgreSQL Database
+     - Variables de entorno
+
+5. **Obtén tu URL**:
+   - Una vez desplegado, Render te dará una URL como: `https://cafeteria-backend-xxxxx.onrender.com`
+
+### Variables de Entorno (Automáticas)
+
+Render configura automáticamente:
+
+- `DATABASE_URL` - Conexión a PostgreSQL
+- `SPRING_PROFILES_ACTIVE=prod` - Activa configuración de producción
+- `PORT` - Puerto del servidor
+
+### Actualizar CORS
+
+Después del despliegue, actualiza el URL del frontend en `application-prod.properties`:
+
+```properties
+spring.web.cors.allowed-origins=https://tu-frontend.com,https://*.onrender.com
+```
+
+### Verificación
+
+Prueba los endpoints:
+
+```bash
+curl https://tu-app.onrender.com/api/products
+curl https://tu-app.onrender.com/api/categories
+```
+
 ## 📝 Próximos Pasos
 
 - [ ] Autenticación de usuarios

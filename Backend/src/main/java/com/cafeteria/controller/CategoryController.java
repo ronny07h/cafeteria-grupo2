@@ -31,13 +31,13 @@ public class CategoryController {
     }
     
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+    public ResponseEntity<Category> createCategory(@jakarta.validation.Valid @RequestBody Category category) {
         Category createdCategory = categoryService.createCategory(category);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category) {
+    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @jakarta.validation.Valid @RequestBody Category category) {
         try {
             Category updatedCategory = categoryService.updateCategory(id, category);
             return ResponseEntity.ok(updatedCategory);

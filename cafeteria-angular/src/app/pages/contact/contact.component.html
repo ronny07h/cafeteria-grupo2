@@ -1,0 +1,197 @@
+<div class="min-vh-100">
+  <div class="container my-5">
+    <div class="row g-5">
+      <!-- Reservation Form -->
+      <div class="col-lg-6">
+        <h2 class="mb-4">Reserva tu Mesa</h2>
+
+        @if (message.text) {
+        <div
+          class="alert alert-dismissible fade show"
+          [ngClass]="'alert-' + message.type"
+          role="alert"
+        >
+          {{ message.text }}
+          <button
+            type="button"
+            class="btn-close"
+            (click)="message = { type: '', text: '' }"
+            aria-label="Close"
+          ></button>
+        </div>
+        }
+
+        <form
+          (ngSubmit)="handleSubmit()"
+          class="p-4 border rounded shadow-sm bg-body"
+        >
+          <div class="mb-3">
+            <label for="name" class="form-label"
+              >Nombre <span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              [(ngModel)]="formData.name"
+              (ngModelChange)="onNameChange($event)"
+              required
+              pattern="^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label"
+              >Email <span class="text-danger">*</span></label
+            >
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              [(ngModel)]="formData.email"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="phone" class="form-label"
+              >Teléfono <span class="text-danger">*</span></label
+            >
+            <input
+              type="tel"
+              class="form-control"
+              id="phone"
+              name="phone"
+              [(ngModel)]="formData.phone"
+              (ngModelChange)="onPhoneChange($event)"
+              required
+              maxlength="10"
+              placeholder="0983304543"
+            />
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="date" class="form-label"
+                >Fecha <span class="text-danger">*</span></label
+              >
+              <input
+                type="date"
+                class="form-control"
+                id="date"
+                name="date"
+                [(ngModel)]="formData.date"
+                required
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="time" class="form-label"
+                >Hora <span class="text-danger">*</span></label
+              >
+              <input
+                type="time"
+                class="form-control"
+                id="time"
+                name="time"
+                [(ngModel)]="formData.time"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="persons" class="form-label"
+              >Número de Personas <span class="text-danger">*</span></label
+            >
+            <select
+              class="form-select"
+              id="persons"
+              name="persons"
+              [(ngModel)]="formData.persons"
+              required
+            >
+              <option value="1">1 Persona</option>
+              <option value="2">2 Personas</option>
+              <option value="3">3 Personas</option>
+              <option value="4">4 Personas</option>
+              <option value="5+">5+ Personas</option>
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary w-100"
+            [disabled]="submitting"
+          >
+            @if (submitting) {
+            <span
+              class="spinner-border spinner-border-sm me-2"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            Enviando... } @else { Enviar Reserva }
+          </button>
+        </form>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="col-lg-6">
+        <h2 class="mb-4">Información de Contacto</h2>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">
+              <i class="fas fa-map-marker-alt text-primary me-2"></i>
+              Dirección
+            </h5>
+            <p class="card-text">Vargas Machuca, Cuenca, Ecuador</p>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">
+              <i class="fas fa-phone text-primary me-2"></i>
+              Teléfono
+            </h5>
+            <p class="card-text">
+              <a href="tel:+593983304543" class="text-decoration-none"
+                >+593 98 330 4543</a
+              >
+            </p>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">
+              <i class="fas fa-envelope text-primary me-2"></i>
+              Email
+            </h5>
+            <p class="card-text">
+              <a
+                href="mailto:info&#64;cafearoma.com"
+                class="text-decoration-none"
+                >info&#64;cafearoma.com</a
+              >
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              <i class="fas fa-clock text-primary me-2"></i>
+              Horario de Atención
+            </h5>
+            <p class="card-text mb-1">Lunes - Viernes: 7:00 AM - 8:00 PM</p>
+            <p class="card-text mb-1">Sábado: 8:00 AM - 9:00 PM</p>
+            <p class="card-text mb-0">Domingo: 8:00 AM - 6:00 PM</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
